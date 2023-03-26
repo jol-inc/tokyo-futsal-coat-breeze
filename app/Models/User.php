@@ -19,10 +19,20 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'kind',
+        'user_id',
         'email',
         'password',
         'role' // User::create()でまとめて登録できるようにするため
     ];
+
+
+    public function users()
+    {
+      return $this->belongsToMany(User::class)
+      ->withPivot('id', 'number_of_people', 'canceled_date');
+    }
+    
 
     /**
      * The attributes that should be hidden for serialization.
