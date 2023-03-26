@@ -29,7 +29,7 @@ class AuthServiceProvider extends ServiceProvider
           return $user->role > 0 && $user->role <= 5;
         });
 
-        Gate::define('user-higher', function($user){
+        Gate::define('customer-higher', function($user){
           return $user->role > 0 && $user->role <= 9;
         });
 
