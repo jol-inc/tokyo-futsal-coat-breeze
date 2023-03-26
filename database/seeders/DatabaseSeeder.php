@@ -28,6 +28,10 @@ class DatabaseSeeder extends Seeder
 
         Event::factory(50)->create();
 
+        $this->call([
+          EventUserSeeder::class,
+        ]);
 
+        
     }
 }
