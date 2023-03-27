@@ -81,9 +81,9 @@ class ManagerEventController extends Controller
 
   public function show(Event $event)
   {
-      $event = Event::findOrFail($event->id);
+      // $event = Event::findOrFail($event->id);これ上でDIしてるから不要だよね？
+    
       $users = $event->users;
-
 
       $reservations = []; // 連想配列を作成
       foreach($users as $user)
@@ -95,6 +95,7 @@ class ManagerEventController extends Controller
         ];
         array_push($reservations, $reservedInfo); // 連想配列に追加
       }
+
 
       $eventDate = CarbonImmutable::parse($event->start_date)->format('Y年m月d日');
       $startTime = CarbonImmutable::parse($event->start_date)->format('H時i分');
