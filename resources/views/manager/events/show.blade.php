@@ -28,7 +28,7 @@
               @endif
 
 
-              {{-- <form method="GET" action="{{ route('events.edit',['event' => $event->id]) }}"> --}}
+              <form method="GET" action="{{ route('manager.events.edit',['event' => $event->id]) }}">
                 <div>
                     <x-input-label for="event_name" value="イベント名" />
                     {{ $event->name }}
