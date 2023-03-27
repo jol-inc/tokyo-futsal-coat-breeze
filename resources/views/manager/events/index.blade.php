@@ -20,7 +20,7 @@
                         </div>
                       @endif
                       <div class="flex justyfy-between">
-<button onclick="location.href='{{ route('manager.events.past') }}'" class="flex mb-4 ml-auto text-white bg-green-500 border-0 py-2 px-6 focus:outline-none hover:bg-green-600 rounded">過去のイベント一覧へ</button>
+                        <button onclick="location.href='{{ route('manager.events.past') }}'" class="flex mb-4 ml-auto text-white bg-green-500 border-0 py-2 px-6 focus:outline-none hover:bg-green-600 rounded">過去のイベント一覧へ</button>
                         <button onclick="location.href='{{ route('manager.events.create') }}'" class="flex mb-4 ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">イベント新規登録ページへ</button>
                       </div>
                       <div class="w-full mx-auto overflow-auto">
