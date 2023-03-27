@@ -16,6 +16,11 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
                 </div>
+                @can('manager-higher')
+                  <x-nav-link :href="route('manager.index')" :active="request()->routeIs('manager.index')">
+                      マネージャー
+                  </x-nav-link>
+                @endcan
             </div>
 
             <!-- Settings Dropdown -->

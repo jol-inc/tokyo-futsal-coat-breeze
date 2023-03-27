@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ManagerController;
+use App\Http\Controllers\ManagerEventController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,9 +26,16 @@ Route::get('/dashboard', function () {
 
 Route::prefix('manager')
 ->middleware('can:manager-higher')->group(function(){
- Route::get('index', function () {
-  dd('manager');
- });
+
+ Route::get('/', [ManagerController::class, 'index'])->name('manager.index');
+
+ Route::get('events', [ManagerEventController::class, 'index'])->name('manager.events.index');
+ Route::get('events/create', [ManagerEventController::class, 'create'])->name('manager.events.create');
+ Route::post('events/store', [ManagerEventController::class, 'store'])->name('manager.events.store');
+ Route::get('events/{event}', [ManagerEventController::class, 'show'])->name('manager.events.show');
+ Route::get('events/{event}/edit', [ManagerEventController::class, 'edit'])->name('manager.events.edit');
+ Route::put('events{event}', [ManagerEventController::class, 'update'])->name('manager.events.update');
+ Route::delete('events{event}', [ManagerEventController::class, 'destroy'])->name('manager.events.destroy');
 });
 
 
