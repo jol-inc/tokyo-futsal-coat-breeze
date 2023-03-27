@@ -29,6 +29,8 @@ Route::prefix('manager')
 
  Route::get('/', [ManagerController::class, 'index'])->name('manager.index');
 
+ Route::get('events/past', [ManagerEventController::class, 'past'])->name('manager.events.past');
+
  Route::get('events', [ManagerEventController::class, 'index'])->name('manager.events.index');
  Route::get('events/create', [ManagerEventController::class, 'create'])->name('manager.events.create');
  Route::post('events/store', [ManagerEventController::class, 'store'])->name('manager.events.store');
