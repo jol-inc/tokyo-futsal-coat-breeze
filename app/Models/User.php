@@ -19,8 +19,6 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
-        'kind',
-        'user_id',
         'email',
         'password',
         'role' // User::create()でまとめて登録できるようにするため

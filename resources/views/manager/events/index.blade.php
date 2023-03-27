@@ -21,7 +21,7 @@
                       @endif
                       <div class="flex justyfy-between">
                         {{-- <button onclick="location.href='{{ route('events.past') }}'" class="flex mb-4 ml-auto text-white bg-green-500 border-0 py-2 px-6 focus:outline-none hover:bg-green-600 rounded">過去のイベント一覧へ</button> --}}
-                        {{-- <button onclick="location.href='{{ route('events.create') }}'" class="flex mb-4 ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">イベント新規登録ページへ</button> --}}
+                        <button onclick="location.href='{{ route('manager.events.create') }}'" class="flex mb-4 ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">イベント新規登録ページへ</button>
                       </div>
                       <div class="w-full mx-auto overflow-auto">
                         <table class="table-auto w-full text-left whitespace-no-wrap">
@@ -40,7 +40,7 @@
                             @foreach ($events as $event)
                               <tr>
                                 <td class="text-blue-500 px-4 py-3">
-                                  {{-- <a href="{{ route('events.show',['event' => $event->id]) }}">{{ $event->name }}</a> --}}
+                                  <a href="{{ route('manager.events.show',['event' => $event->id]) }}">{{ $event->name }}</a>
                                   </td>
                                 <td class="px-4 py-3">{{ $event->start_date }}</td>
                                 <td class="px-4 py-3">{{ $event->end_date }}</td>
