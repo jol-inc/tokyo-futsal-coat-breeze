@@ -64,13 +64,13 @@ class EventController extends Controller
 
 
 
+    // public function calendarChange(Request $request){
     public function calendarChange(Request $request){
 
       ///////////////////////////////
       //リクエスト日の情報を作成
       //ココは calendar() と違う（リクエスト日） 
       $currentDate = CarbonImmutable::parse($request->calendar)->format('m月d日');
-  
   
       
       ///////////////////////////////

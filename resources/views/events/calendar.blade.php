@@ -63,15 +63,13 @@
           ]);
         @endphp
 
-
         <div class="text-left text-sm">
           日付を選択して下さい。本日から最大30日先まで選択可能です。
           <p class="text-red-400">※便宜上、現状はいつでも選択可能</p> 
         </div> 
-
-        <form id="calendar-change" action="{{route('events.calendar.change')}}" method="POST">
-          @csrf
-          <x-text-input id="calendar" class="block mt-4 w-48 border-indigo-700 border-8" type="text" name="calendar" />
+  
+        <form id="calendar-change" action="{{route('events.calendar.change')}}" method="GET">
+          <x-text-input  type="text" name="calendar" id="calendar" class="block mt-4 w-48 border-indigo-700 border-8" />
         </form>
 
         <p class="mx-4 my-4">本日： {{ $currentDate }}</p>

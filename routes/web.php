@@ -23,7 +23,8 @@ Route::get('/', function () {
 
 
 Route::get('events/calendar', [EventController::class, 'calendar'])->name('events.calendar');
-Route::post('events/calendar-change', [EventController::class, 'calendarChange'])->name('events.calendar.change');
+// Route::post('events/calendar-change', [EventController::class, 'calendarChange'])->name('events.calendar.change');
+Route::get('events/calendar-change', [EventController::class, 'calendarChange'])->name('events.calendar.change');
 
 // Route::get('events/{id}', [EventController::class, 'show'])->name('events.show');
 // Route::get('events/{event}', [EventController::class, 'show'])->name('events.show');
