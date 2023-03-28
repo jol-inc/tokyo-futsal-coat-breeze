@@ -11,20 +11,22 @@ use Carbon\CarbonImmutable;
 class EventReservationController extends Controller
 {
 
-  public function reserve( Request $request){
-
+  // public function reserve( $id){
+  // public function reserve( Event $event){
+  public function reserve($id, Request $request){
+// dd($id, $request);
     $reservedPeople = DB::table('event_user')
     ->select('event_id', DB::raw('sum(number_of_people) as number_of_people'))
     ->whereNull('canceled_date')
     ->groupBy('event_id')
-    ->having('event_id', $request->id)
-    ->having('event_id', $request->id)
+    ->having('event_id', $id)
+    ->having('event_id', $id)
     ->first();
 
     // 自分が既に予約していないかの確認変数
     $ownReserveExists = DB::table('event_user')
     ->where('user_id','=',Auth::id())
-    ->where('event_id','=',$request->id)
+    ->where('event_id','=',$id)
     ->whereNull('canceled_date')
     ->orderBy('created_at','desc')
     ->limit(1)
@@ -37,9 +39,7 @@ class EventReservationController extends Controller
         // dd("予約可能です。");
         DB::table('event_user')->insert([
           'user_id' => Auth::id(),
-          // 'event_id' => $id,
-          'event_id' => $request->id,
-          // 'number_of_people' => $request->number_of_people,
+          'event_id' => $id,
           'number_of_people' => $request->number_of_people,
           'created_at' => CarbonImmutable::now(),
         ]);

@@ -69,7 +69,7 @@
                   {{-- 自分が既に予約していないかの確認 --}}
                   @if(!$ownReserveExists)
                     {{-- <form method="POST" action="{{ route('user.events.reserve',['id' => $event->id]) }}"> --}}
-    <form method="POST" action="{{ route('event-reservation.reserve') }}">
+    <form method="POST" action="{{ route('event-reservation.reserve',['id' => $event->id]) }}">
                       @csrf 
 
                       @if($reservablePeople <= 0 )
@@ -81,7 +81,7 @@
                           @endfor
                         </select>
 
-      <input type="hidden" name="id" value="{{ $event->id }}">
+      {{-- <input type="hidden" name="id" value="{{ $event->id }}"> --}}
 
 
                         <x-primary-button class="ml-3">

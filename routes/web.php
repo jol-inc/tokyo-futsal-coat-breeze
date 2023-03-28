@@ -30,8 +30,8 @@ Route::get('events/calendar-change', [EventController::class, 'calendarChange'])
 Route::get('events/{event}', [EventController::class, 'show'])->name('events.show');
 
 //イベント予約
-Route::post('event-reservation/reserve', [EventReservationController::class, 'reserve'])->name('event-reservation.reserve');
-Route::post('event-reservation/{event}/cancel', [EventReservationController::class, 'cancel'])->name('event-reservation.cance');
+Route::post('event-reservation/reserve/{id}', [EventReservationController::class, 'reserve'])->name('event-reservation.reserve');
+Route::post('event-reservation/cancel/{id}', [EventReservationController::class, 'cancel'])->name('event-reservation.cance');
 
 
 Route::get('/dashboard', function () {
