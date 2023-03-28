@@ -22,9 +22,11 @@
                     </x-nav-link>
                 </div>
                 @can('manager-higher')
-                  <x-nav-link :href="route('manager.index')" :active="request()->routeIs('manager.index')">
-                      マネージャー
-                  </x-nav-link>
+                  <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('manager.index')" :active="request()->routeIs('manager.index')">
+                        マネージャー
+                    </x-nav-link>
+                  </div>
                 @endcan
             </div>
 

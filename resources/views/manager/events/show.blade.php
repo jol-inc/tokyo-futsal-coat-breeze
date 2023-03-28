@@ -1,7 +1,7 @@
 <x-app-layout>
   <x-slot name="header">
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-          イベント詳細
+          イベント詳細（マネージャー用）
       </h2>
   </x-slot>
 
@@ -28,7 +28,7 @@
               @endif
 
 
-              <form method="GET" action="{{ route('manager.events.edit',['id' => $event->id]) }}">
+              <form method="GET" action="{{ route('manager.events.edit',['event' => $event->id]) }}">
                 <div>
                     <x-input-label for="event_name" value="イベント名" />
                     {{ $event->name }}

@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// ＴＯＰページ
 Route::get('/', function () {
     return view('welcome');
 });
@@ -25,19 +26,20 @@ Route::get('/', function () {
 // カレンダー
 Route::get('events/calendar', [EventController::class, 'calendar'])->name('events.calendar');
 Route::get('events/calendar-change', [EventController::class, 'calendarChange'])->name('events.calendar.change');
-
 // イベント詳細
 Route::get('events/{event}', [EventController::class, 'show'])->name('events.show');
 
 //イベント予約
 Route::post('event-reservation/reserve/{id}', [EventReservationController::class, 'reserve'])->name('event-reservation.reserve');
-Route::post('event-reservation/cancel/{id}', [EventReservationController::class, 'cancel'])->name('event-reservation.cance');
+Route::post('event-reservation/{id}/cancel', [EventReservationController::class, 'cancel'])->name('event-reservation.cance');
 
-
+// ダッシュボード
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+
+// マネージャー
 Route::prefix('manager')
 ->middleware('can:manager-higher')->group(function(){
 
@@ -53,6 +55,8 @@ Route::prefix('manager')
  Route::put('events{event}', [ManagerEventController::class, 'update'])->name('manager.events.update');
  Route::delete('events{event}', [ManagerEventController::class, 'destroy'])->name('manager.events.destroy');
 });
+
+
 
 
 Route::middleware('auth')->group(function () {

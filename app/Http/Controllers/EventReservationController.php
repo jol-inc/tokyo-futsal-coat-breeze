@@ -11,10 +11,8 @@ use Carbon\CarbonImmutable;
 class EventReservationController extends Controller
 {
 
-  // public function reserve( $id){
-  // public function reserve( Event $event){
   public function reserve($id, Request $request){
-// dd($id, $request);
+
     $reservedPeople = DB::table('event_user')
     ->select('event_id', DB::raw('sum(number_of_people) as number_of_people'))
     ->whereNull('canceled_date')
@@ -47,7 +45,6 @@ class EventReservationController extends Controller
         session()->flash('status', '登録okです');
         return redirect()->route('dashboard');
       }else{
-        // dd("人数が多すぎます。");
         session()->flash('status', '人数的に予約出来ませんでした。他の方が同時に予約した可能性もあります');
         return view('dashboard'); 
       }
@@ -56,8 +53,10 @@ class EventReservationController extends Controller
         return view('dashboard'); 
     }
 
+  }
 
 
+  public function cancel($id){
 
   }
 
