@@ -63,6 +63,62 @@ class EventController extends Controller
     }
 
 
+
+    public function calendarChange(Request $request){
+
+      ///////////////////////////////
+      //リクエスト日の情報を作成
+      //ココは calendar() と違う（リクエスト日） 
+      $currentDate = CarbonImmutable::parse($request->calendar)->format('m月d日');
+  
+  
+      
+      ///////////////////////////////
+      //リクエスト週の情報を$currentWeek として作成
+      $currentWeek = [];
+  
+      //ココは calendar() と違う（こっちはリクエスト日が基準）
+      for($i = 0; $i < 7; $i++){
+        $day = CarbonImmutable::parse($request->calendar)->addDays($i)->format('m月d日');
+        $checkDay = CarbonImmutable::parse($request->calendar)->addDays($i)->format('Y-m-d');
+        $dayOfWeek = CarbonImmutable::parse($request->calendar)->addDays($i)->dayName;
+        array_push( $currentWeek, [
+          'day' => $day,
+          'checkDay' => $checkDay,
+          'dayOfWeek' => $dayOfWeek,
+        ]);
+      }
+  
+  
+  
+      ///////////////////////////////
+      //リクエスト週のイベント情報を取得（外部結合でnullも含め、イベント毎に何人予約あるかも把握）
+  
+      //SQL whereBetweenに入れる変数       
+      //ココはindex()と違う（リクエスト日が基準なので） 
+      $startDate = CarbonImmutable::parse($request->calendar)->format('Y-m-d');
+      $endDate   = CarbonImmutable::parse($request->calendar)->addDays(7)->format('Y-m-d');
+  
+      //$reservedPeopleは下部$events作成の為の変数
+      $reservedPeople = DB::table('event_user')
+      ->select('event_id', DB::raw('sum(number_of_people) as number_of_people'))
+      ->groupBy('event_id');
+  
+      //外部結合の理由は、イベントに予約が有っても無くてもイベント自体が作成されているのか知りたい為
+      $events = DB::table('events')
+      ->leftJoinSub($reservedPeople, 'reservedPeople', function($join){
+      $join->on('events.id', '=', 'reservedPeople.event_id');
+      })
+      ->whereBetween('start_date', [$startDate, $endDate])
+      ->orderBy('start_date', 'asc')
+      ->get();
+  
+      return view('events.calendar',compact('currentDate','currentWeek','events'));
+    }
+
+
+
+
     public function show(Event $event){
 
         // ▼当該イベントに紐づく予約情報（多対多）
