@@ -1,11 +1,11 @@
 <x-app-layout>
   <x-slot name="header">
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-          イベント新規登録
+          イベント詳細
       </h2>
   </x-slot>
 
-  <div class="py-12">
+  <div class="pt-4 pb-2">
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
           <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
 
@@ -28,75 +28,75 @@
               @endif
 
 
-              <form method="POST" action="{{ route('manager.events.store') }}">
-                @csrf
+
+                <div>
+                    <x-input-label for="event_name" value="イベントＩＤ" />
+                    {{ $event->id }}
+                </div>
                 <div>
                     <x-input-label for="event_name" value="イベント名" />
-                    <x-text-input id="event_name" class="block mt-1 w-full" type="text" name="event_name" :value="old('event_name')" required />
+                    {{ $event->name }}
                 </div>
 
                 <div>
                     <x-input-label for="information" value="イベント詳細" />
-                    <textarea name="information" id="information" rows="3" class="block mt-1 w-full" required>{{ old('information') }}</textarea>
+                    {!! nl2br(e($event->information)) !!}
                 </div>
 
                 <div class="md:flex justify-between">
                   <div class="mt-4">
                     <x-input-label for="event_date" value="イベント日付" />
-                    <x-text-input id="event_date" class="block mt-1 w-full" type="text" name="event_date" required />
+                    {{ $eventDate }}
                   </div>
                   <div class="mt-4">
                     <x-input-label for="start_time" value="開始時間" />
-                    <x-text-input id="start_time" class="block mt-1 w-full" type="text" name="start_time" required />
+                    {{ $startTime }}
                   </div>
                   <div class="mt-4">
                     <x-input-label for="end_time" value="終了時間" />
-                    <x-text-input id="end_time" class="block mt-1 w-full" type="text" name="end_time" required />
+                    {{ $endTime }}
                   </div>
                 </div>
-                
+             
+
+
                 <div class="md:flex justify-between items-end">
+
                   <div class="mt-4">
                     <x-input-label for="max_people" value="定員数" />
-                    <x-text-input id="max_people" class="block mt-1 w-full" type="number" name="max_people" required />
+                    {{ $event->max_people }}
                   </div>
-                  <div class="flex space-x-4 justify-around">
-                    <input type="radio" name="is_visible" value="1" checked>表示
-                    <input type="radio" name="is_visible" value="0">非表示
-                  </div>
-                  <x-primary-button class="ml-3">
-                    新規登録
-                  </x-primary-button>
+                  {{-- 自分が既に予約していないかの確認 --}}
+                  @if(!$ownReserveExists)
+                    {{-- <form method="POST" action="{{ route('user.events.reserve',['id' => $event->id]) }}"> --}}
+    {{-- <form method="POST" action="{{ route('user.events.reserve',['id' => $event->id]) }}"> --}}
+                      @csrf 
+
+                      @if($reservablePeople <= 0 )
+                        <span class="text-red-500 text-xs">このイベントは満員です。</span>
+                      @else
+                        <select name="number_of_people" id="">
+                          @for ($i=1; $i <= $reservablePeople; $i++)
+                            <option value="{{$i}}">{{$i}}</option>
+                          @endfor
+                        </select>
+
+                        <x-primary-button class="ml-3">
+                          予約する
+                        </x-primary-button>
+                      @endif
+                    </form>
+                  @else
+                    <p class="text-green-600">既にご自分で予約済です。</p> 
+                  @endif
                 </div>
 
-              </form>
+    
+
             </div>
           </div>
       </div>
   </div>
+
+
 </x-app-layout>
-
-
-
-
-<script>
-flatpickr("#event_date", {
-  locale: "ja",
-  // minDate: "today",
-  maxDate: new Date().fp_incr(30)
-});
-
-const setting = {
-  locale: "ja",
-  enableTime: true,
-  noCalendar: true,
-  dateFormat: "H:i",
-  time_24hr: true,
-  minTime: "10:00",
-  maxTime: "20:00",
-  minuteIncrement: 30
-}
-
-flatpickr("#start_time", setting);
-flatpickr("#end_time", setting);
-</script>

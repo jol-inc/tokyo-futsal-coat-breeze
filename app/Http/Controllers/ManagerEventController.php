@@ -81,8 +81,7 @@ class ManagerEventController extends Controller
 
   public function show(Event $event)
   {
-      // $event = Event::findOrFail($event->id);これ上でDIしてるから不要だよね？
-    
+
       $users = $event->users;
 
       $reservations = []; // 連想配列を作成
