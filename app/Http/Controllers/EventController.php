@@ -90,7 +90,6 @@ class EventController extends Controller
       }
   
   
-  
       ///////////////////////////////
       //リクエスト週のイベント情報を取得（外部結合でnullも含め、イベント毎に何人予約あるかも把握）
   

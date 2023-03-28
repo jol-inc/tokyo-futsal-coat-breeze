@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ManagerController;
 use App\Http\Controllers\ManagerEventController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\EventReservationController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,15 +22,16 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
+// カレンダー
 Route::get('events/calendar', [EventController::class, 'calendar'])->name('events.calendar');
-// Route::post('events/calendar-change', [EventController::class, 'calendarChange'])->name('events.calendar.change');
 Route::get('events/calendar-change', [EventController::class, 'calendarChange'])->name('events.calendar.change');
 
-// Route::get('events/{id}', [EventController::class, 'show'])->name('events.show');
-// Route::get('events/{event}', [EventController::class, 'show'])->name('events.show');
+// イベント詳細
 Route::get('events/{event}', [EventController::class, 'show'])->name('events.show');
 
+//イベント予約
+Route::post('event-reservation/reserve', [EventReservationController::class, 'reserve'])->name('event-reservation.reserve');
+Route::post('event-reservation/{event}/cancel', [EventReservationController::class, 'cancel'])->name('event-reservation.cance');
 
 
 Route::get('/dashboard', function () {
