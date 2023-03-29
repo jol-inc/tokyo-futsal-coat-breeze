@@ -26,7 +26,7 @@
                 <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
                     @auth
                       @can('customer')
-                        <a href="{{ url('/dashboard') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Dashboard</a>
+                        <a href="{{ route('mypage.index')}}" class="text-sm text-gray-700 dark:text-gray-500 underline">マイページ</a>
                       @endcan
                       @can('manager')
                         <a href="{{ route('manager.index') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">店舗マネージャーTOP</a>

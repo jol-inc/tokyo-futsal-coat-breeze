@@ -19,9 +19,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// WELCOMEページ
+// Route::get('/', function () {
+//     return view('welcome');
+// })->name('/');
 // ＴＯＰページ
 Route::get('/', function () {
-    return view('welcome');
+    return view('top');
 })->name('/');
 
 // カレンダー
@@ -35,9 +39,10 @@ Route::post('event-reservation/reserve/{id}', [EventReservationController::class
 Route::post('event-reservation/{id}/cancel', [EventReservationController::class, 'cancel'])->name('event-reservation.cance');
 
 // ダッシュボード
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
+
 // マイページ
 Route::get('mypage', [MypageController::class, 'index'])->name('mypage.index')
 ->middleware(['auth', 'verified']);

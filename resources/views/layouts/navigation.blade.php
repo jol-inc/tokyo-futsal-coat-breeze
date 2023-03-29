@@ -12,6 +12,11 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('/')" :active="request()->routeIs('/')">
+                        TOPページ
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('events.calendar')" :active="request()->routeIs('events.calendar')">
                         イベントカレンダー
                     </x-nav-link>
@@ -37,6 +42,8 @@
                 @endcan
             </div>
 
+
+@auth           
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ml-6">
                 <x-dropdown align="right" width="48">
@@ -70,6 +77,32 @@
                     </x-slot>
                 </x-dropdown>
             </div>
+
+@endauth
+
+@guest
+  
+  @if (Route::has('login'))
+  <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
+      @auth
+        @can('customer')
+          <a href="{{ route('mypage.index')}}" class="text-sm text-gray-700 dark:text-gray-500 underline">マイページ</a>
+        @endcan
+        @can('manager')
+          <a href="{{ route('manager.index') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">店舗マネージャーTOP</a>
+        @endcan
+      @else
+          <a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Log in</a>
+
+          @if (Route::has('register'))
+              <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">Register</a>
+          @endif
+      @endauth
+  </div>
+  @endif
+
+@endguest
+
 
             <!-- Hamburger -->
             <div class="-mr-2 flex items-center sm:hidden">
@@ -110,6 +143,10 @@
           </div>
         @endcan
 
+
+
+@auth
+
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200">
             <div class="px-4">
@@ -134,5 +171,9 @@
                 </form>
             </div>
         </div>
+
+@endauth
+
+
     </div>
 </nav>

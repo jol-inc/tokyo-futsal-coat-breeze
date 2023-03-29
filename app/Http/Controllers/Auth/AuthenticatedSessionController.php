@@ -30,15 +30,15 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
+
+        // カスタマーの時はマイページに遷移
+        if (Gate::allows('customer')) {
+            return redirect()->route('mypage.index');
+        }
         // マネージャーの時はマネージャーページに遷移
         if (Gate::allows('manager')) {
             return redirect()->route('manager.index');
         }
-
-        // カスタマーの時はマイページに遷移
-        // if (Gate::allows('customer')) {
-        //     return redirect()->route('mypage.index');
-        // }
 
         return redirect()->intended(RouteServiceProvider::HOME);
     }
