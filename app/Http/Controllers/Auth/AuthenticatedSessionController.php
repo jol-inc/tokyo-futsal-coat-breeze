@@ -35,6 +35,11 @@ class AuthenticatedSessionController extends Controller
             return redirect()->route('manager.index');
         }
 
+        // カスタマーの時はマイページに遷移
+        // if (Gate::allows('customer')) {
+        //     return redirect()->route('mypage.index');
+        // }
+
         return redirect()->intended(RouteServiceProvider::HOME);
     }
 

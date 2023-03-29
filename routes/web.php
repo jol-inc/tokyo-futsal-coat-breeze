@@ -5,6 +5,7 @@ use App\Http\Controllers\ManagerController;
 use App\Http\Controllers\ManagerEventController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\EventReservationController;
+use App\Http\Controllers\MyPageController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -37,6 +38,9 @@ Route::post('event-reservation/{id}/cancel', [EventReservationController::class,
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+// マイページ
+Route::get('mypage', [MypageController::class, 'index'])->name('mypage.index')
+->middleware(['auth', 'verified']);
 
 
 // マネージャー
