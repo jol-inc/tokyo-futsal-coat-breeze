@@ -38,7 +38,7 @@
                 @can('manager-higher')
                   <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('manager.index')" :active="request()->routeIs('manager.index')">
-                        店舗マネージャー
+                        店舗管理者
                     </x-nav-link>
                   </div>
                 @endcan
@@ -121,6 +121,11 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link :href="route('/')" :active="request()->routeIs('/')">
+              TOPページ
+            </x-responsive-nav-link>
+        </div>
+        <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('events.calendar')" :active="request()->routeIs('events.calendar')">
               イベントカレンダー
             </x-responsive-nav-link>
@@ -140,7 +145,7 @@
         @can('manager-higher')
           <div class="pt-2 pb-3 space-y-1">
               <x-responsive-nav-link :href="route('manager.index')" :active="request()->routeIs('manager.index')">
-                店舗マネージャー
+                店舗管理者
               </x-responsive-nav-link>
           </div>
         @endcan

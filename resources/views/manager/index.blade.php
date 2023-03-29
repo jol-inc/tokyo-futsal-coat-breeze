@@ -1,7 +1,7 @@
 <x-app-layout>
   <x-slot name="header">
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-          店舗マネージャーページ（ＴＯＰ）
+          店舗管理者（ＴＯＰ）
       </h2>
   </x-slot>
 
