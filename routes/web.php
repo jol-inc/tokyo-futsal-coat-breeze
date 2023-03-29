@@ -35,17 +35,19 @@ Route::get('events/calendar-change', [EventController::class, 'calendarChange'])
 Route::get('events/{event}', [EventController::class, 'show'])->name('events.show');
 
 //イベント予約
-Route::post('event-reservation/reserve/{id}', [EventReservationController::class, 'reserve'])->name('event-reservation.reserve');
-Route::post('event-reservation/{id}/cancel', [EventReservationController::class, 'cancel'])->name('event-reservation.cance');
+Route::middleware('can:customer-higher','auth')->group(function(){
+  Route::post('event-reservation/reserve/{id}', [EventReservationController::class, 'reserve'])->name('event-reservation.reserve');
+  Route::post('event-reservation/{id}/cancel', [EventReservationController::class, 'cancel'])->name('event-reservation.cance');
+});
 
-// ダッシュボード
-// Route::get('/dashboard', function () {
+// ダッシュボードRoute::get('/dashboard', function () {
 //     return view('dashboard');
 // })->middleware(['auth', 'verified'])->name('dashboard');
+// 
 
 // マイページ
 Route::get('mypage', [MypageController::class, 'index'])->name('mypage.index')
-->middleware(['auth', 'verified']);
+->middleware(['auth']);
 
 
 // マネージャー

@@ -43,14 +43,16 @@ class EventReservationController extends Controller
         ]);
 
         session()->flash('status', '登録okです');
-        return redirect()->route('dashboard');
+        return redirect()->route('mypage.index');
       }else{
         session()->flash('status', '人数的に予約出来ませんでした。他の方が同時に予約した可能性もあります');
-        return view('dashboard'); 
+        // return view('top'); 
+        return redirect()->route('mypage.index');
       }
     }else{
         session()->flash('status', '既にご自分で予約済です。');
-        return view('dashboard'); 
+        // return view('top'); 
+        return redirect()->route('mypage.index');
     }
 
   }
