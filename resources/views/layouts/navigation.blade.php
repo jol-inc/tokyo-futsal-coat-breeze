@@ -5,9 +5,10 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('/') }}">
+                    <a href="{{ route('/') }}" class="flex items-center">
                         {{-- <x-application-logo class="block h-9 w-auto fill-current text-gray-800" /> --}}
-                        <img src="/images/soccerball.png" class="block h-9 w-auto fill-current">
+                        <img src="/images/soccerball.png" class="block h-9 w-auto fill-current mr-2">
+                        <p class="text-2xl text-green-600">東京フットサルコート</p>
                     </a>
                 </div>
 
