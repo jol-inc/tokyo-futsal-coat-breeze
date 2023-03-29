@@ -6,8 +6,8 @@
   </x-slot>
 
   <div class="py-12">
-    <div class="event-calendar mx-auto sm:px-6 lg:px-8">
-      <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+    <div class="event-calendar mx-auto sm:px-6 lg:px-8 flex">
+      <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mx-auto">
 
 
         @php
@@ -73,6 +73,8 @@
         </form>
 
         <p class="mx-4 my-4">本日： {{ $currentDate }}</p>
+
+
 
         {{-- ここでFLEXを効かせている（以下横並び） --}}
         <div class="flex border border-green-400 mx-auto">
@@ -143,6 +145,8 @@
 
 
         </div>
+
+ 
 
 
     
