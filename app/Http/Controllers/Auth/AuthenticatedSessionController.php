@@ -9,6 +9,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Gate;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -28,6 +29,11 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
 
         $request->session()->regenerate();
+
+        // マネージャーの時はマネージャーページに遷移
+        if (Gate::allows('manager')) {
+            return redirect()->route('manager.index');
+        }
 
         return redirect()->intended(RouteServiceProvider::HOME);
     }
