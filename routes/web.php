@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Route;
 // ＴＯＰページ
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('/');
 
 // カレンダー
 Route::get('events/calendar', [EventController::class, 'calendar'])->name('events.calendar');
