@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Route;
 
+use Illuminate\Support\Facades\Auth;
+
 class RouteServiceProvider extends ServiceProvider
 {
     /**
@@ -18,9 +20,13 @@ class RouteServiceProvider extends ServiceProvider
      * @var string
      */
 
+
 // ★ここ変更した
     // public const HOME = '/dashboard';
     public const HOME = '/';
+    public const CUSTOMER_HOME = 'mypage';
+    public const MANAGER_HOME = 'manager';
+
 
     /**
      * Define your route model bindings, pattern filters, and other route configuration.

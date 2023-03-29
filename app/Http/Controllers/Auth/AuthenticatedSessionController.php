@@ -30,7 +30,18 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(RouteServiceProvider::HOME);
+        // return redirect()->intended(RouteServiceProvider::HOME);
+
+        //  roleにより遷移先を変更。RouteServiceProviderの const HOME も修正
+        if (Gate::allows('customer')) {
+
+          return redirect()->intended(RouteServiceProvider::CUSTOMER_HOME);
+        }
+        if (Gate::allows('manager')) {
+
+          return redirect()->intended(RouteServiceProvider::MANAGER_HOME);
+        }
+
     }
 
     /**
