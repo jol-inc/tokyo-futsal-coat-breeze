@@ -47,13 +47,10 @@ class EventReservationController extends Controller
         return redirect()->route('mypage.events');
       }else{
         session()->flash('status', '人数的に予約出来ませんでした。他の方が同時に予約した可能性もあります');
-        // return view('top'); 
-        // return redirect()->route('mypage.index');
         return back();
       }
     }else{
         session()->flash('status', '既にご自分で予約済です。');
-        // return view('top'); 
         return redirect()->route('mypage.events');
     }
 
@@ -76,9 +73,9 @@ class EventReservationController extends Controller
     if( \Carbon\CarbonImmutable::parse($eventUser->start_date)->format('Y-m-d H:i:s')  >  \Carbon\CarbonImmutable::today()->format('Y-m-d H:i:s')){
       $eventUser->canceled_date = CarbonImmutable::now()->format('Y-m-d H:i:s');
       $eventUser->save();
-      return redirect()->route('mypage.index')->with('status','キャンセルしました。');
+      return redirect()->route('mypage.events')->with('status','キャンセルしました。');
     }else{
-      return redirect()->route('mypage.index')->with('status','過去のイベントはキャンセル出来ません。');
+      return redirect()->route('mypage.events')->with('status','過去のイベントはキャンセル出来ません。');
     }
 
 

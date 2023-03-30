@@ -88,14 +88,18 @@
                       @endif
                     </form>
                   @else
-                    <p class="text-green-600">既にご自分で予約済です。</p>
-                    {{-- 過去は非表示 --}}
-{{-- @if( \Carbon\CarbonImmutable::parse($event->start_date)->format('Y-m-d H:i:s')  >   \Carbon\CarbonImmutable::today()->format('Y-m-d H:i:s')  ) --}}
+                    {{-- 本日以降の場合 --}}
+                    @if( \Carbon\CarbonImmutable::parse($event->start_date)->format('Y-m-d H:i:s')  >   \Carbon\CarbonImmutable::today()->format('Y-m-d H:i:s')  )
+
+                      <p class="text-green-600">既にご自分で予約済です。</p>
+
                       <form method="POST" id="cancel_{{ $event->id }}" action="{{ route('event-reservation.cancel',['id' => $event->id]) }}">
                         @csrf
-                        <a href="#" data-id="{{ $event->id }}" onclick="cancelPost(this)">キャンセルする</a>
+                        <x-primary-button  data-id="{{ $event->id }}" onclick="cancelPost(this)" class="ml-3">
+                          キャンセルする
+                        </x-primary-button>
                       </form>
-{{-- @endif --}}
+                    @endif
                   @endif
 
                 </div>
@@ -112,7 +116,7 @@
         document.getElementById( "reserve_" + e.dataset.id ).submit();
       }
     }
-    
+
     function cancelPost(e){
       "use strict";
       if ( confirm('本当にキャンセルしますか？') ){

@@ -1,7 +1,7 @@
  <x-app-layout>
   <x-slot name="header">
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-        マイページ（予約中のイベント）
+        マイページ（予約済イベント）
       </h2>
   </x-slot>
 
