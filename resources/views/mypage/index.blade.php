@@ -1,7 +1,7 @@
 <x-app-layout>
   <x-slot name="header">
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-        マイページ TOP
+        マイページ（TOP）
       </h2>
   </x-slot>
 
@@ -15,7 +15,6 @@
                 </div>
                 @endif
                 @include('parts.mypage-events-buttons')
-                  {{ __("You're logged in!") }}
               </div>
           </div>
       </div>

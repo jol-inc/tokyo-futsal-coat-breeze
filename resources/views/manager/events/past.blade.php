@@ -1,7 +1,7 @@
 <x-app-layout>
   <x-slot name="header">
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-          過去のイベント（店舗管理者用）
+        店舗管理者（過去のイベント）
       </h2>
   </x-slot>
 
