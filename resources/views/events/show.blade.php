@@ -68,7 +68,9 @@
                   </div>
                   {{-- 自分が既に予約していないかの確認 --}}
                   @if(!$ownReserveExists)
-                    <form method="POST" action="{{ route('event-reservation.reserve',['id' => $event->id]) }}">
+                    {{-- <form method="POST" action="{{ route('event-reservation.reserve',['id' => $event->id]) }}"> --}}
+                    <form method="POST" id="reservation_{{ $event->id }}" action="{{ route('event-reservation.reserve',['id' => $event->id]) }}">
+
                       @csrf 
 
                       @if($reservablePeople <= 0 )
@@ -80,7 +82,7 @@
                           @endfor
                         </select>
 
-                        <x-primary-button class="ml-3">
+                        <x-primary-button  data-id="{{ $event->id }}" onclick="reservationPost(this)" class="ml-3">
                           予約する
                         </x-primary-button>
                       @endif
@@ -88,12 +90,12 @@
                   @else
                     <p class="text-green-600">既にご自分で予約済です。</p>
                     {{-- 過去は非表示 --}}
-                    {{-- @if( \Carbon\CarbonImmutable::parse($event->start_date)->format('Y-m-d H:i:s')  >   \Carbon\CarbonImmutable::today()->format('Y-m-d H:i:s')  ) --}}
+{{-- @if( \Carbon\CarbonImmutable::parse($event->start_date)->format('Y-m-d H:i:s')  >   \Carbon\CarbonImmutable::today()->format('Y-m-d H:i:s')  ) --}}
                       <form method="POST" id="cancel_{{ $event->id }}" action="{{ route('event-reservation.cancel',['id' => $event->id]) }}">
                         @csrf
                         <a href="#" data-id="{{ $event->id }}" onclick="cancelPost(this)">キャンセルする</a>
                       </form>
-                    {{-- @endif --}}
+{{-- @endif --}}
                   @endif
 
                 </div>
@@ -104,6 +106,13 @@
   </div>
 
   <script>
+    function reservationPost(e){
+      "use strict";
+      if ( confirm('本当に予約しますか？') ){
+        document.getElementById( "reserve_" + e.dataset.id ).submit();
+      }
+    }
+    
     function cancelPost(e){
       "use strict";
       if ( confirm('本当にキャンセルしますか？') ){

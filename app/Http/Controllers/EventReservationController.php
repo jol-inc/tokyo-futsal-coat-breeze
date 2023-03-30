@@ -43,17 +43,18 @@ class EventReservationController extends Controller
           'created_at' => CarbonImmutable::now(),
         ]);
 
-        session()->flash('status', '登録okです');
-        return redirect()->route('mypage.index');
+        session()->flash('status', '予約okです');
+        return redirect()->route('mypage.events');
       }else{
         session()->flash('status', '人数的に予約出来ませんでした。他の方が同時に予約した可能性もあります');
         // return view('top'); 
-        return redirect()->route('mypage.index');
+        // return redirect()->route('mypage.index');
+        return back();
       }
     }else{
         session()->flash('status', '既にご自分で予約済です。');
         // return view('top'); 
-        return redirect()->route('mypage.index');
+        return redirect()->route('mypage.events');
     }
 
   }
