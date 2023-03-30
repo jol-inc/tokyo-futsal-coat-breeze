@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Event;
+use App\Models\EventUser;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Carbon\CarbonImmutable;
@@ -59,7 +60,15 @@ class EventReservationController extends Controller
 
 
   public function cancel($id){
+    $event = EventUser::where('event_id',$id)
+    ->where('user_id',Auth::id())
+    ->latest()
+    ->first();
 
+    $event->canceled_date = CarbonImmutable::now()->format('Y-m-d H:i:s');
+    $event->save();
+    
+    return redirect()->route('mypage.index')->with('status','キャンセルしました。');
   }
 
 

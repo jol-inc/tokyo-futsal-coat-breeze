@@ -14,6 +14,7 @@
                   {{ session('status') }}
                 </div>
                 @endif
+                @include('parts.mypage-events-buttons')
                   {{ __("You're logged in!") }}
               </div>
           </div>

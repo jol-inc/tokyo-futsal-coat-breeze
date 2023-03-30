@@ -87,6 +87,10 @@
                     </form>
                   @else
                     <p class="text-green-600">既にご自分で予約済です。</p> 
+                    <form method="POST" id="cancel_{{ $event->id }}" action="{{ route('event-reservation.cancel',['id' => $event->id]) }}">
+                      @csrf
+                      <a href="#" data-id="{{ $event->id }}" onclick="cancelPost(this)">キャンセルする</a>
+                    </form>
                   @endif
                 </div>
 
@@ -96,6 +100,15 @@
           </div>
       </div>
   </div>
+
+  <script>
+    function cancelPost(e){
+      "use strict";
+      if ( confirm('本当にキャンセルしますか？') ){
+        document.getElementById( "cancel_" + e.dataset.id ).submit();
+      }
+    }
+  </script>
 
 
 </x-app-layout>

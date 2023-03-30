@@ -1,7 +1,7 @@
 <x-app-layout>
   <x-slot name="header">
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-          イベント編集ページ（マネージャー用）
+          イベント編集ページ（店舗管理者用）
       </h2>
   </x-slot>
 

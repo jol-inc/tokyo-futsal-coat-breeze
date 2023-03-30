@@ -37,7 +37,7 @@ Route::get('events/{event}', [EventController::class, 'show'])->name('events.sho
 //イベント予約
 Route::middleware('can:customer-higher','auth')->group(function(){
   Route::post('event-reservation/reserve/{id}', [EventReservationController::class, 'reserve'])->name('event-reservation.reserve');
-  Route::post('event-reservation/{id}/cancel', [EventReservationController::class, 'cancel'])->name('event-reservation.cance');
+  Route::post('event-reservation/{id}/cancel', [EventReservationController::class, 'cancel'])->name('event-reservation.cancel');
 });
 
 // ダッシュボードRoute::get('/dashboard', function () {
@@ -51,7 +51,7 @@ Route::prefix('mypage')
 ->middleware(['auth'])
 ->group(function(){
   Route::get('/', [MypageController::class, 'index'])->name('mypage.index');
-  Route::get('events', [ManagerEventController::class, 'events'])->name('manager.events.index');
+  Route::get('events', [MypageController::class, 'events'])->name('mypage.events');
 });
 
 
