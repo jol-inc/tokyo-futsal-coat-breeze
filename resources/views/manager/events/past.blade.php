@@ -1,7 +1,7 @@
 <x-app-layout>
   <x-slot name="header">
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-          過去のイベント一覧（マネージャー用）
+          過去のイベント（店舗管理者用）
       </h2>
   </x-slot>
 
@@ -19,7 +19,7 @@
                           {{ session('status') }}
                         </div>
                       @endif
-
+                      @include('parts.manager-events-buttons')
                       <div class="w-full mx-auto overflow-auto">
                         <table class="table-auto w-full text-left whitespace-no-wrap">
                           <thead>

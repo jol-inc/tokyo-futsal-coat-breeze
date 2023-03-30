@@ -46,16 +46,22 @@ Route::middleware('can:customer-higher','auth')->group(function(){
 // 
 
 // マイページ
-Route::get('mypage', [MypageController::class, 'index'])->name('mypage.index')
-->middleware(['auth']);
+Route::prefix('mypage')
+// ->middleware(['auth','can:user-higher'])
+->middleware(['auth'])
+->group(function(){
+  Route::get('/', [MypageController::class, 'index'])->name('mypage.index');
+  Route::get('events', [ManagerEventController::class, 'events'])->name('manager.events.index');
+});
 
 
 // マネージャー
 Route::prefix('manager')
-->middleware('can:manager-higher')->group(function(){
+->middleware('auth','can:manager-higher')->group(function(){
 
  Route::get('/', [ManagerController::class, 'index'])->name('manager.index');
 
+//  ここからManagerEventController
  Route::get('events/past', [ManagerEventController::class, 'past'])->name('manager.events.past');
 
  Route::get('events', [ManagerEventController::class, 'index'])->name('manager.events.index');
