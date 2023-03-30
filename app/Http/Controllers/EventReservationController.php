@@ -61,33 +61,20 @@ class EventReservationController extends Controller
 
   public function cancel($id){
 
-//この変数 問題 start_date が取れてない。
-    // $event = EventUser::where('event_id',$id)
-    // ->where('user_id',Auth::id())
-    // ->latest()
-    // ->first();
-
-
-
-$eventUser = DB::table('event_user')
-->join('events','event_user.event_id', '=', 'events.id')
-->where('event_user.event_id',$id)
-->where('event_user.user_id',Auth::id())
-->select('event_user.*','start_date')
-->orderBy('event_user.created_at','desc')
-->first();
-
-
-// dd($eventUser->canceled_date);
-
+    // event_userテーブル、eventsテーブル join
+    $eventUser = DB::table('event_user')
+    ->join('events','event_user.event_id', '=', 'events.id')
+    ->where('event_user.event_id',$id)
+    ->where('event_user.user_id',Auth::id())
+    ->select('event_user.*','start_date')
+    ->orderBy('event_user.created_at','desc')
+    ->first();
 
 
 // 過去の物はキャンセル出来ない様にする
-                                    //この変数 問題 start_date が取れてない。
-    if( \Carbon\CarbonImmutable::parse($eventUser->start_date)->format('Y-m-d H:i:s')  >   \Carbon\CarbonImmutable::today()->format('Y-m-d H:i:s')){
+    if( \Carbon\CarbonImmutable::parse($eventUser->start_date)->format('Y-m-d H:i:s')  >  \Carbon\CarbonImmutable::today()->format('Y-m-d H:i:s')){
       $eventUser->canceled_date = CarbonImmutable::now()->format('Y-m-d H:i:s');
       $eventUser->save();
-      
       return redirect()->route('mypage.index')->with('status','キャンセルしました。');
     }else{
       return redirect()->route('mypage.index')->with('status','過去のイベントはキャンセル出来ません。');
