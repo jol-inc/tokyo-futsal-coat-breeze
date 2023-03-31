@@ -6,6 +6,7 @@ use App\Http\Controllers\ManagerEventController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\EventReservationController;
 use App\Http\Controllers\MyPageController;
+use App\Http\Controllers\CoatReservationController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -40,6 +41,14 @@ Route::middleware('can:customer-higher','auth')->group(function(){
   Route::post('event-reservation/{id}/cancel', [EventReservationController::class, 'cancel'])->name('event-reservation.cancel');
 });
 
+// コートレンタル
+Route::get('coat-reservation', [CoatReservationController::class, 'index'])->name('coat-reservation.index');
+Route::get('coat-reservation/create', [CoatReservationController::class, 'create'])->name('coat-reservation.create');
+Route::post('coat-reservation', [CoatReservationController::class, 'store'])->name('coat-reservation.store');
+Route::post('coat-reservation/{event}/cancel', [CoatReservationController::class, 'cancel'])->name('coat-reservation.cancel');
+
+
+
 // ダッシュボードRoute::get('/dashboard', function () {
 //     return view('dashboard');
 // })->middleware(['auth', 'verified'])->name('dashboard');
@@ -66,7 +75,7 @@ Route::prefix('manager')
 
  Route::get('events', [ManagerEventController::class, 'index'])->name('manager.events.index');
  Route::get('events/create', [ManagerEventController::class, 'create'])->name('manager.events.create');
- Route::post('events/store', [ManagerEventController::class, 'store'])->name('manager.events.store');
+ Route::post('events', [ManagerEventController::class, 'store'])->name('manager.events.store');
  Route::get('events/{event}', [ManagerEventController::class, 'show'])->name('manager.events.show');
  Route::get('events/{event}/edit', [ManagerEventController::class, 'edit'])->name('manager.events.edit');
  Route::put('events{event}', [ManagerEventController::class, 'update'])->name('manager.events.update');

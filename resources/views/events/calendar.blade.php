@@ -112,13 +112,11 @@
             <div class="w-32">
               <div class="py-1 px-2 border border-gray-200 text-center">{{ $currentWeek[$i]['day'] }}</div>
               <div class="py-1 px-2 border border-gray-200 text-center">{{ $currentWeek[$i]['dayOfWeek'] }}</div>
-              {{-- @for($j = 0; $j < 21; $j++) --}}
               @for($j = 0; $j < 31; $j++)
                 @if($events->isNotEmpty()){{-- イベントが1週間無かった場合はelseで全部div作成--}}
                   {{-- このdivにイベントが無い場合はelseでdiv作成--}}
                   @if( !is_null($events->firstWhere('start_date', $currentWeek[$i]['checkDay'] . " " . EVENT_TIME[$j]) )  )
                     @php
-
                       // 詳細ページに飛ぶ為のid
                       $eventId = $events->firstWhere('start_date', $currentWeek[$i]['checkDay'] . " " . EVENT_TIME[$j])->id;
                       // div内に記入するイベント名
@@ -130,8 +128,6 @@
                     @endphp
                     {{-- イベント名、 背景色 --}}
 
-                    {{-- <a href="{{ route('events.show',['id' => $eventId ]) }}"> --}}
-                    {{-- <a href="{{ route('events.show',['event' => $eventId ]) }}"> --}}
                     <a href="{{ route('events.show',['event' => $eventId ]) }}">
                       <div class="py-1 px-2 h-8 border border-gray-200 text-xs bg-blue-100">
                         {{ $eventName }}
@@ -141,7 +137,6 @@
                     {{-- 開始時刻、終了時刻の差を30分で割り 1を引いた数値が無くなる迄背景色付div --}}
                     @if( $eventPeriod > 0)
                       @for($k = 0; $k < $eventPeriod; $k++)
-                      {{-- <a href="{{ route('events.show',['id' => $eventId ]) }}"> --}}
                       <a href="{{ route('events.show',['event' => $eventId ]) }}">
                         <div class="py-1 px-2 h-8 border border-gray-200 bg-blue-100"></div>
                       </a>
