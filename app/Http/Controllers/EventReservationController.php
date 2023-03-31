@@ -14,11 +14,10 @@ class EventReservationController extends Controller
 
   public function reserve($id, Request $request){
 
-// 何かの不具合で非表示のイベントが来た場合
-// dd(Event::findOrFail($id)->is_visible);
-if(Event::findOrFail($id)->is_visible === false){
-  return back()->with('status', '非表示中のイベントは予約出来ません。');
-}
+    // 何かの不具合で非表示のイベントが飛んで来た場合、早期リターン
+    if(Event::findOrFail($id)->is_visible === false){
+      return back()->with('status', '非表示中のイベントは予約出来ません。');
+    }
 
 
     // このイベントの予約人数
@@ -28,6 +27,7 @@ if(Event::findOrFail($id)->is_visible === false){
     ->groupBy('event_id')
     ->having('event_id', $id)
     ->first();
+
 
     // 自分が既に予約していないかの確認変数
     $ownReserveExists = DB::table('event_user')
@@ -42,12 +42,17 @@ if(Event::findOrFail($id)->is_visible === false){
     if(!$ownReserveExists){
       // 当該イベントの予約が無いか、定員が（予約数+予約希望人数）以上であれば
       if( is_null($reservedPeople) || $request->max_people >= $reservedPeople->number_of_people + $request->number_of_people ){
-        // dd("予約可能です。");
-        DB::table('event_user')->insert([
+
+        // DB::table('event_user')->insert([
+        //   'user_id' => Auth::id(),
+        //   'event_id' => $id,
+        //   'number_of_people' => $request->number_of_people,
+        //   'created_at' => CarbonImmutable::now(),
+        // ]);
+        EventUser::create([
           'user_id' => Auth::id(),
           'event_id' => $id,
           'number_of_people' => $request->number_of_people,
-          'created_at' => CarbonImmutable::now(),
         ]);
 
         session()->flash('status', '予約okです');
@@ -62,6 +67,7 @@ if(Event::findOrFail($id)->is_visible === false){
     }
 
   }
+
 
 
   public function cancel($id){
@@ -85,6 +91,33 @@ if(Event::findOrFail($id)->is_visible === false){
       ->orderBy('event_user.created_at','desc')
       ->limit(1)
       ->update(['canceled_date' => CarbonImmutable::now()->format('Y-m-d H:i:s')]);
+
+// DB::table('event_user')
+// ->where('event_user.event_id',$id)
+// ->where('event_user.user_id',Auth::id())
+// ->orderBy('event_user.created_at','desc')
+// ->limit(1)
+// ->update(['canceled_date' => CarbonImmutable::now()->format('Y-m-d H:i:s')]);
+
+// EventUser::where('event_user.event_id',$id)
+// ->where('event_user.user_id',Auth::id())
+// ->orderBy('event_user.created_at','desc')
+// ->limit(1)
+// ->update([
+//   'canceled_date' => CarbonImmutable::now()->format('Y-m-d H:i:s'),
+// ]);
+
+EventUser::where('event_user.event_id',$id)
+->where('event_user.user_id',Auth::id())
+->orderBy('event_user.created_at','desc')
+->latest()
+->first()
+->update([
+  'canceled_date' => CarbonImmutable::now()->format('Y-m-d H:i:s'),
+]);
+
+
+
 
       return redirect()->route('mypage.events')->with('status','キャンセルしました。');
     }else{

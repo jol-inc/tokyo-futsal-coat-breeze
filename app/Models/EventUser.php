@@ -10,4 +10,11 @@ class EventUser extends Model
     use HasFactory;
 
     protected $table = 'event_user';
+
+    protected $fillable = [
+      'user_id',
+      'event_id',
+      'number_of_people',
+      'canceled_date',
+    ];
 }
