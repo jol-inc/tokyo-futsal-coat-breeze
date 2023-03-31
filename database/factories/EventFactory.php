@@ -36,7 +36,8 @@ class EventFactory extends Factory
         'start_date' => $startDate,
         // 'end_date' => $dummyDate->modify('+1hour')->format('Y-m-d H:i:s'),
         'end_date' => $endDate,
-        'is_visible' => $this->faker->boolean
+        // 'is_visible' => $this->faker->boolean
+        'is_visible' => 1
       ];
 
 

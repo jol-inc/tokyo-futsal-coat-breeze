@@ -53,6 +53,7 @@ class EventController extends Controller
       ->leftJoinSub($reservedPeople, 'reservedPeople', function($join){
       $join->on('events.id', '=', 'reservedPeople.event_id');
       })
+      ->where('events.is_visible',true)//表示中にした物
       ->whereBetween('start_date', [$startDate, $endDate])
       ->orderBy('start_date', 'asc')
       ->get();
@@ -108,6 +109,7 @@ class EventController extends Controller
       ->leftJoinSub($reservedPeople, 'reservedPeople', function($join){
       $join->on('events.id', '=', 'reservedPeople.event_id');
       })
+      ->where('is_visible',true)//表示中にした物
       ->whereBetween('start_date', [$startDate, $endDate])
       ->orderBy('start_date', 'asc')
       ->get();
