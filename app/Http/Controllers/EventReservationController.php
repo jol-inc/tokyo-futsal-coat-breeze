@@ -14,11 +14,18 @@ class EventReservationController extends Controller
 
   public function reserve($id, Request $request){
 
+// 何かの不具合で非表示のイベントが来た場合
+// dd(Event::findOrFail($id)->is_visible);
+if(Event::findOrFail($id)->is_visible === false){
+  return back()->with('status', '非表示中のイベントは予約出来ません。');
+}
+
+
+    // このイベントの予約人数
     $reservedPeople = DB::table('event_user')
     ->select('event_id', DB::raw('sum(number_of_people) as number_of_people'))
     ->whereNull('canceled_date')
     ->groupBy('event_id')
-    ->having('event_id', $id)
     ->having('event_id', $id)
     ->first();
 
@@ -59,8 +66,8 @@ class EventReservationController extends Controller
 
   public function cancel($id){
 
-    // event_userテーブル、eventsテーブル join
-    $eventUser = DB::table('event_user')
+    // start_dateカラムを取得したいのでevent_userテーブルにeventsテーブルを joinJOIN
+    $eventUserJoin = DB::table('event_user')
     ->join('events','event_user.event_id', '=', 'events.id')
     ->where('event_user.event_id',$id)
     ->where('event_user.user_id',Auth::id())
@@ -69,10 +76,16 @@ class EventReservationController extends Controller
     ->first();
 
 
-// 過去の物はキャンセル出来ない様にする
-    if( \Carbon\CarbonImmutable::parse($eventUser->start_date)->format('Y-m-d H:i:s')  >  \Carbon\CarbonImmutable::today()->format('Y-m-d H:i:s')){
-      $eventUser->canceled_date = CarbonImmutable::now()->format('Y-m-d H:i:s');
-      $eventUser->save();
+    // 過去の物はキャンセル出来ない様にする
+    if( \Carbon\CarbonImmutable::parse($eventUserJoin->start_date)->format('Y-m-d H:i:s')  >  \Carbon\CarbonImmutable::today()->format('Y-m-d H:i:s')){
+
+      DB::table('event_user')
+      ->where('event_user.event_id',$id)
+      ->where('event_user.user_id',Auth::id())
+      ->orderBy('event_user.created_at','desc')
+      ->limit(1)
+      ->update(['canceled_date' => CarbonImmutable::now()->format('Y-m-d H:i:s')]);
+
       return redirect()->route('mypage.events')->with('status','キャンセルしました。');
     }else{
       return redirect()->route('mypage.events')->with('status','過去のイベントはキャンセル出来ません。');
