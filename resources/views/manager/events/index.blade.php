@@ -30,7 +30,7 @@
                               <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">終了日時</th>
                               <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">予約人数</th>
                               <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">定員</th>
-                              <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">表示・非表示</th>
+                              <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">イベントカレンダー等<br>に表示or非表示</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -50,7 +50,13 @@
                                   @endif
                                 </td>
                                 <td class="px-4 py-3">{{ $event->max_people }}</td>
-                                <td class="px-4 py-3">{{ $event->is_visible }}</td>
+                                <td class="px-4 py-3">
+                                  @if($event->is_visible)
+                                    表示中
+                                  @else
+                                    非表示中
+                                  @endif
+                                </td>
                               </tr>
                               @endforeach
                           </tbody>

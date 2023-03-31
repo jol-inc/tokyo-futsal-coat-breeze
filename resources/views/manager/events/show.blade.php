@@ -61,7 +61,8 @@
                     {{ $event->max_people }}
                   </div>
 
-                  <div class="flex space-x-4 justify-around">
+                  <div class="space-x-4 justify-around">
+                    <x-input-label for="is_visible" value="イベントカレンダー等に表示or非表示" />
                     @if($event->is_visible)
                       表示中
                     @else
@@ -89,7 +90,7 @@
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
 
           <div class="max-w-2xl py-4 mx-auto">
-            @if (!$users->isEmpty())
+            {{-- @if (!$users->isEmpty()) --}}
               <div class="text-center py-2">予約状況</div>
               <table class="table-auto w-full text-left whitespace-no-wrap">
                 <thead>
@@ -99,17 +100,19 @@
                   </tr>
                 </thead>
                 <tbody>
-                  @foreach($reservations as $reservation)
-                    @if(is_null($reservation['canceled_date']))
-                      <tr>
-                        <td class="px-4 py-3">{{ $reservation['name'] }}</td>
-                        <td class="px-4 py-3">{{ $reservation['number_of_people']}}</td>
-                      </tr>
-                    @endif
-                  @endforeach
+                  @if (!$users->isEmpty())
+                    @foreach($reservations as $reservation)
+                      @if(is_null($reservation['canceled_date']))
+                        <tr>
+                          <td class="px-4 py-3">{{ $reservation['name'] }}</td>
+                          <td class="px-4 py-3">{{ $reservation['number_of_people']}}</td>
+                        </tr>
+                      @endif
+                    @endforeach
+                  @endif
                 </tbody>
               </table>
-            @endif
+            {{-- @endif --}}
           </div>
 
         </div>

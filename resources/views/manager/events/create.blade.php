@@ -60,7 +60,8 @@
                     <x-input-label for="max_people" value="定員数" />
                     <x-text-input id="max_people" class="block mt-1 w-full" type="number" name="max_people" required />
                   </div>
-                  <div class="flex space-x-4 justify-around">
+                  <div class="space-x-4 justify-around">
+                    <x-input-label for="is_visible" value="イベントカレンダー等に表示or非表示" />
                     <input type="radio" name="is_visible" value="1" checked>表示
                     <input type="radio" name="is_visible" value="0">非表示
                   </div>

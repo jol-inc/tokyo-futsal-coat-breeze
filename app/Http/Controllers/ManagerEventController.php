@@ -50,7 +50,7 @@ class ManagerEventController extends Controller
   public function store(StoreEventRequest $request)
   {
 
-    // 存在確認（サービス使用）
+    // 存在確認（Service使用）
     $check = EventService::checkEventDuplication($request['event_date'],$request['start_time'],$request['end_time']);
 
     // 存在したら
@@ -81,8 +81,9 @@ class ManagerEventController extends Controller
 
   public function show(Event $event)
   {
-
+      // ▼当該イベントに紐づくuserを取得
       $users = $event->users;
+// dd($users);      
 
       $reservations = []; // 連想配列を作成
       foreach($users as $user)
