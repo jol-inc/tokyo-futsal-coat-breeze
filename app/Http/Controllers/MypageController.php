@@ -21,7 +21,7 @@ class MypageController extends Controller
   public function events(){
 
     // この時点ではユーザーに紐づくキャンセルされてないイベント達
-    $events = User::findorFail(Auth::id())->events()
+    $events = User::findOrFail(Auth::id())->events()
     ->wherePivot('canceled_date',null)
     ->get();
 
