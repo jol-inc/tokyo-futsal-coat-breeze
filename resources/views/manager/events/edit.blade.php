@@ -87,8 +87,8 @@ const setting = {
   noCalendar: true,
   dateFormat: "H:i",
   time_24hr: true,
-  minTime: "10:00",
-  maxTime: "20:00",
+  minTime: "08:00",
+  maxTime: "23:00",
 }
 
 flatpickr("#event_date", {

@@ -13,6 +13,10 @@
         @php
         define('EVENT_TIME',[
           // const EVENT_TIME = [
+          '08:00:00',
+          '08:30:00',
+          '09:00:00',
+          '09:30:00',
           '10:00:00',
           '10:30:00',
           '11:00:00',
@@ -34,10 +38,20 @@
           '19:00:00',
           '19:30:00',
           '20:00:00',
+          '20:30:00',
+          '21:00:00',
+          '21:30:30',
+          '22:00:00',
+          '22:30:30',
+          '23:00:00',
           // ];
             ]);
           define('CALENDAR_LEFT_TIME',[
           // const CALENDAR_LEFT_TIME = [
+          '08:00',
+          '08:30',
+          '09:00',
+          '09:30',
           '10:00',
           '10:30',
           '11:00',
@@ -59,25 +73,27 @@
           '19:00',
           '19:30',
           '20:00',
+          '20:30',
+          '21:00',
+          '21:30',
+          '22:00',
+          '22:30',
+          '23:00',
           // ];
           ]);
         @endphp
 
         <div class="text-left text-sm">
           日付を選択して下さい。本日から最大30日先まで選択可能です。
-          <p class="text-red-400">※便宜上、現状はいつでも選択可能</p> 
+          <p class="text-blue-600">※テストの為、過去も選択可能</p> 
         </div> 
   
         <form id="calendar-change" action="{{route('events.calendar.change')}}" method="GET">
-          <x-text-input  type="text" name="calendar" id="calendar" class="block mt-4 w-48 border-indigo-700 border-8" />
+          <x-text-input  type="text" name="calendar" id="calendar" class="block mt-4 w-48 border-indigo-200 border-8" />
         </form>
 
-        <p class="mx-4 my-4">本日： {{ $currentDate }}</p>
-
-
-
         {{-- ここでFLEXを効かせている（以下横並び） --}}
-        <div class="flex border border-green-400 mx-auto">
+        <div class="flex border border-green-400 mx-auto my-8">
 
           {{-- ここでFLEXの塊 --}}
           {{-- 最左列（表説明、時間軸表示）--}}
@@ -96,7 +112,8 @@
             <div class="w-32">
               <div class="py-1 px-2 border border-gray-200 text-center">{{ $currentWeek[$i]['day'] }}</div>
               <div class="py-1 px-2 border border-gray-200 text-center">{{ $currentWeek[$i]['dayOfWeek'] }}</div>
-              @for($j = 0; $j < 21; $j++)
+              {{-- @for($j = 0; $j < 21; $j++) --}}
+              @for($j = 0; $j < 31; $j++)
                 @if($events->isNotEmpty()){{-- イベントが1週間無かった場合はelseで全部div作成--}}
                   {{-- このdivにイベントが無い場合はelseでdiv作成--}}
                   @if( !is_null($events->firstWhere('start_date', $currentWeek[$i]['checkDay'] . " " . EVENT_TIME[$j]) )  )

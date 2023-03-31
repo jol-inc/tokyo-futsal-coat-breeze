@@ -17,7 +17,7 @@ class EventFactory extends Factory
     public function definition()
     {
 
-      $availableHour = $this->faker->numberBetween(10, 18); //10時～18時
+      $availableHour = $this->faker->numberBetween(8, 20); //10時～18時
       $minutes = [0, 30]; // 00分か 30分
       $mKey = array_rand($minutes); //ランダムにキーを取得
       $addHour = $this->faker->numberBetween(1, 3); // イベント時間 1時間～3時間
