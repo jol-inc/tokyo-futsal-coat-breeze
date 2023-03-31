@@ -43,12 +43,6 @@ class EventReservationController extends Controller
       // 当該イベントの予約が無いか、定員が（予約数+予約希望人数）以上であれば
       if( is_null($reservedPeople) || $request->max_people >= $reservedPeople->number_of_people + $request->number_of_people ){
 
-        // DB::table('event_user')->insert([
-        //   'user_id' => Auth::id(),
-        //   'event_id' => $id,
-        //   'number_of_people' => $request->number_of_people,
-        //   'created_at' => CarbonImmutable::now(),
-        // ]);
         EventUser::create([
           'user_id' => Auth::id(),
           'event_id' => $id,
