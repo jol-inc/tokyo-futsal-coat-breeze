@@ -21,7 +21,7 @@
                       @endif
                       
 
-                      <h3 class="py-4 font-medium text-gray-900 text-sm">本日以降</h3> 
+                      <h3 class="py-4 font-medium text-gray-900 text-sm">現在以降</h3> 
                       <div class="w-full mx-auto overflow-auto">
                         <table class="table-auto w-full text-left whitespace-no-wrap">
                           <thead>
@@ -58,7 +58,7 @@
 {{-- {{ $events->links() }} --}}
                       </div>
 
-                      <h3 class="py-4 font-medium text-gray-900 text-sm">昨日迄</h3> 
+                      <h3 class="py-4 font-medium text-gray-900 text-sm">過去</h3> 
                       <div class="w-full mx-auto overflow-auto">
                         <table class="table-auto w-full text-left whitespace-no-wrap">
                           <thead>

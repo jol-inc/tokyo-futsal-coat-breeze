@@ -76,7 +76,7 @@ if(Event::findOrFail($id)->is_visible === false){
     ->first();
 
 
-    // 過去の物はキャンセル出来ない様にする
+    // 本日以降のみキャンセル可能にする
     if( \Carbon\CarbonImmutable::parse($eventUserJoin->start_date)->format('Y-m-d H:i:s')  >  \Carbon\CarbonImmutable::today()->format('Y-m-d H:i:s')){
 
       DB::table('event_user')

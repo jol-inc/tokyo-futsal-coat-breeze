@@ -20,17 +20,15 @@ class MypageController extends Controller
 
   public function events(){
 
-    $user =  User::findorFail(Auth::id());
+    // この時点ではユーザーに紐づくキャンセルされてないイベント達
+    $events = User::findorFail(Auth::id())->events()
+    ->wherePivot('canceled_date',null)
+    ->get();
 
-    // この時点ではユーザーに紐づくイベント
-    $events = $user->events
-    ->whereNull('cancel_date');//キャンセルされてない
 
     // Service から 本日以降、昨日以前 を取得
     $from_today_events = MypageService::when_events($events,'from_today_events');
     $past_events = MypageService::when_events($events,'past_events');
-
-// dd($events,$from_today_events,$past_events);
 
 
     return view('mypage.events',compact('events','from_today_events','past_events'));
