@@ -22,17 +22,15 @@ class ManagerEventController extends Controller
 
     // 予約人数の合計クエリ
     $reservedPeople = DB::table('event_user')
-    ->select('event_id', DB::raw('sum(number_of_people)
-    as number_of_people'))
-    ->whereNull('canceled_date') //キャンセルを除く
+    ->select('event_id', DB::raw('sum(number_of_people) as number_of_people'))
+    ->whereNull('canceled_date') //通常イベントのキャンセルを除く （event_userテーブル）
     ->groupBy('event_id');
+
     // サブクエリを外部結合で
     $events = DB::table('events')
     ->leftJoinSub($reservedPeople, 'reservedPeople',
-    function($join){
-    $join->on('events.id', '=', 'reservedPeople.event_id');
-    })
-
+    function($join){$join->on('events.id', '=', 'reservedPeople.event_id');})
+    ->whereNull('canceled_date') //コートレンタルのキャンセルを除く （eventsテーブル）
     ->whereDate('start_date','>=',$today)
     ->orderBy('start_date','desc')
     ->paginate(10);
