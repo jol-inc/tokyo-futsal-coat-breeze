@@ -66,9 +66,9 @@
                     <x-input-label for="max_people" value="定員数" />
                     {{ $event->max_people }}
                   </div>
-                  {{-- 自分が既に予約していないかの確認 --}}
+                  {{-- 自分が既に予約していない場合 --}}
                   @if(!$ownReserveExists)
-                    <form method="POST" action="{{ route('event-reservation.reserve',['id' => $event->id]) }}">
+                  
                     <form method="POST" id="reservation_{{ $event->id }}" action="{{ route('event-reservation.reserve',['id' => $event->id]) }}">
 
                       @csrf 
@@ -88,8 +88,8 @@
                       @endif
                     </form>
                   @else
-                    {{-- 本日以降の場合 --}}
-                    @if( \Carbon\CarbonImmutable::parse($event->start_date)->format('Y-m-d H:i:s')  >   \Carbon\CarbonImmutable::today()->format('Y-m-d H:i:s')  )
+                    {{-- 現在以降の場合 --}}
+                    @if( \Carbon\CarbonImmutable::parse($event->start_date)->format('Y-m-d H:i:s')  >   \Carbon\CarbonImmutable::now()->format('Y-m-d H:i:s')  )
 
                       <p class="text-green-600">既にご自分で予約済です。</p>
 
@@ -122,6 +122,7 @@
           </div>
       </div>
   </div>
+
 
 
   <script>

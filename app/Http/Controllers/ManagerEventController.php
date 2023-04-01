@@ -159,13 +159,12 @@ class ManagerEventController extends Controller
     as number_of_people'))
     ->whereNull('canceled_date') //キャンセルを除く
     ->groupBy('event_id');
+
     // サブクエリを外部結合で
     $events = DB::table('events')
     ->leftJoinSub($reservedPeople, 'reservedPeople',
-    function($join){
-    $join->on('events.id', '=', 'reservedPeople.event_id');
-    })
-
+    function($join){$join->on('events.id', '=', 'reservedPeople.event_id');})
+    ->whereNull('canceled_date')//コートレンタルのキャンセルを除く （eventsテーブル）
     ->whereDate('start_date','<',$today)
     ->orderBy('start_date','desc')
     ->paginate(10);
