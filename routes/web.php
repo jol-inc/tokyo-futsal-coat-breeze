@@ -64,13 +64,14 @@ Route::prefix('mypage')
 });
 
 
-// マネージャー
+// マネージャー以上
 Route::prefix('manager')
 ->middleware('auth','can:manager-higher')->group(function(){
 
+ //ManagerController
  Route::get('/', [ManagerController::class, 'index'])->name('manager.index');
 
-//  ここからManagerEventController
+ //ここからManagerEventController
  Route::get('events/past', [ManagerEventController::class, 'past'])->name('manager.events.past');
 
  Route::get('events', [ManagerEventController::class, 'index'])->name('manager.events.index');
@@ -84,7 +85,7 @@ Route::prefix('manager')
 
 
 
-
+// プロフィール
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
