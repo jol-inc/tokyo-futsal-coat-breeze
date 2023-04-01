@@ -93,12 +93,26 @@
 
                       <p class="text-green-600">既にご自分で予約済です。</p>
 
-                      <form method="POST" id="cancel_{{ $event->id }}" action="{{ route('event-reservation.cancel',['id' => $event->id]) }}">
-                        @csrf
-                        <x-primary-button  data-id="{{ $event->id }}" onclick="cancelPost(this)" class="ml-3">
-                          キャンセルする
-                        </x-primary-button>
-                      </form>
+
+                      @if ( $event->kind === 1 )
+                      {{-- コートレンタル用 --}}
+                        <form method="POST" id="coatCancel_{{ $event->id }}" action="{{ route('coat-reservation.cancel',['id' => $event->id]) }}">
+                          @csrf
+                          <x-primary-button  data-id="{{ $event->id }}" onclick="coatCancel(this)" class="ml-3">
+                            キャンセルする
+                          </x-primary-button>
+                        </form>
+                      @else
+                      {{-- イベント用 --}}
+                        <form method="POST" id="eventCancel_{{ $event->id }}" action="{{ route('event-reservation.cancel',['id' => $event->id]) }}">
+                          @csrf
+                          <x-primary-button  data-id="{{ $event->id }}" onclick="eventCancel(this)" class="ml-3">
+                            キャンセルする
+                          </x-primary-button>
+                        </form>
+                      @endif
+
+
                     @endif
                   @endif
 
@@ -117,12 +131,24 @@
       }
     }
 
-    function cancelPost(e){
+
+    function coatCancel(e){
       "use strict";
       if ( confirm('本当にキャンセルしますか？') ){
-        document.getElementById( "cancel_" + e.dataset.id ).submit();
+        document.getElementById( "coatCancel_" + e.dataset.id ).submit();
       }
     }
+
+
+    function eventCancel(e){
+      "use strict";
+      if ( confirm('本当にキャンセルしますか？') ){
+        document.getElementById( "eventCancel_" + e.dataset.id ).submit();
+      }
+    }
+
+
+
   </script>
 
 

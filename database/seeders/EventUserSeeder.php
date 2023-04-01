@@ -34,7 +34,6 @@ class EventUserSeeder extends Seeder
         'user_id' => 1,
         'event_id' => 2,
         'number_of_people' => 3,
-        // 'canceled_date' => '2022-03-01 00:00:00'
         'canceled_date' => null,
         'created_at' => new DateTime(),
         ]

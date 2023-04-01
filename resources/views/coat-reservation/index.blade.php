@@ -15,7 +15,7 @@
                 </div>
                 @endif
                   <div class="flex justify-center last:first-letter: p-6 text-gray-900">
-                    <button onclick="location.href='{{ route('coat-reservation.create') }}'" class="mx-4 py-2 px-6 text-white bg-indigo-500 border-0 focus:outline-none hover:bg-indigo-600 rounded">コートレンタル登録ページへ</button>
+                    <button onclick="location.href='{{ route('coat-reservation.create') }}'" class="mx-4 py-2 px-6 text-white bg-indigo-500 border-0 focus:outline-none hover:bg-indigo-600 rounded">コートレンタル予約ページへ</button>
                   </div>
                   <ul>
                     <li>料金（1時間）</li>

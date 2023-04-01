@@ -66,7 +66,7 @@ class EventReservationController extends Controller
 
   public function cancel($id){
 
-    // start_dateカラムを取得したいのでevent_userテーブルにeventsテーブルを joinJOIN
+    // start_dateカラムを取得したいのでevent_userテーブルに eventsテーブルを join
     $eventUserJoin = DB::table('event_user')
     ->join('events','event_user.event_id', '=', 'events.id')
     ->where('event_user.event_id',$id)
@@ -79,39 +79,13 @@ class EventReservationController extends Controller
     // 本日以降のみキャンセル可能にする
     if( \Carbon\CarbonImmutable::parse($eventUserJoin->start_date)->format('Y-m-d H:i:s')  >  \Carbon\CarbonImmutable::today()->format('Y-m-d H:i:s')){
 
-      DB::table('event_user')
-      ->where('event_user.event_id',$id)
+      EventUser::where('event_user.event_id',$id)
       ->where('event_user.user_id',Auth::id())
-      ->orderBy('event_user.created_at','desc')
-      ->limit(1)
-      ->update(['canceled_date' => CarbonImmutable::now()->format('Y-m-d H:i:s')]);
-
-// DB::table('event_user')
-// ->where('event_user.event_id',$id)
-// ->where('event_user.user_id',Auth::id())
-// ->orderBy('event_user.created_at','desc')
-// ->limit(1)
-// ->update(['canceled_date' => CarbonImmutable::now()->format('Y-m-d H:i:s')]);
-
-// EventUser::where('event_user.event_id',$id)
-// ->where('event_user.user_id',Auth::id())
-// ->orderBy('event_user.created_at','desc')
-// ->limit(1)
-// ->update([
-//   'canceled_date' => CarbonImmutable::now()->format('Y-m-d H:i:s'),
-// ]);
-
-EventUser::where('event_user.event_id',$id)
-->where('event_user.user_id',Auth::id())
-->orderBy('event_user.created_at','desc')
-->latest()
-->first()
-->update([
-  'canceled_date' => CarbonImmutable::now()->format('Y-m-d H:i:s'),
-]);
-
-
-
+      ->latest()
+      ->first()
+      ->update([
+        'canceled_date' => CarbonImmutable::now()->format('Y-m-d H:i:s'),
+      ]);
 
       return redirect()->route('mypage.events')->with('status','キャンセルしました。');
     }else{
