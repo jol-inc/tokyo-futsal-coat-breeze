@@ -14,9 +14,11 @@ use App\Models\EventUser;
 
 class CoatReservationController extends Controller
 {
+
     public function index(){
       return view('coat-reservation.index');
     }
+
 
 
     public function create(){
@@ -24,8 +26,8 @@ class CoatReservationController extends Controller
     }
 
 
-    public function store(CoatRreservationRequest $request){
 
+    public function store(CoatRreservationRequest $request){
 
       // 同じ時間帯にイベント存在確認（Service使用）
       $check = EventService::checkEventDuplication($request['event_date'],$request['start_time'],$request['end_time']);
@@ -74,9 +76,6 @@ class CoatReservationController extends Controller
 
 //後でトランザクション
 
-//そもそも  EventReservationController  の cancel メソッドに飛んでいる・・・。
-
-
 
       //▼event_user テーブル に canceled_date 挿入
 
@@ -118,8 +117,8 @@ class CoatReservationController extends Controller
         return redirect()->route('mypage.events')->with('status','過去のコートレンタルはキャンセル出来ません。');
       }
 
-
     }
+
 
 
 }
