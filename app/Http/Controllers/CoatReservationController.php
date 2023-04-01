@@ -106,7 +106,8 @@ class CoatReservationController extends Controller
         Event::where('id',$id)
         ->where('user_id',Auth::id())
         ->latest()
-        // ->first() を付けるとなぜかevents テーブルのみ不具合 canceled_date が入らない
+        // ->first() 
+        // を付けるとなぜかevents テーブルのみ不具合 canceled_date が入らない
         ->update([
           'canceled_date' => CarbonImmutable::now()->format('Y-m-d H:i:s'),
         ]);

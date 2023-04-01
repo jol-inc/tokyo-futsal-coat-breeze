@@ -98,7 +98,7 @@
                       {{-- コートレンタル用 --}}
                         <form method="POST" id="coatCancel_{{ $event->id }}" action="{{ route('coat-reservation.cancel',['id' => $event->id]) }}">
                           @csrf
-                          <x-primary-button  data-id="{{ $event->id }}" onclick="coatCancel(this)" class="ml-3">
+                          <x-primary-button  data-id="{{ $event->id }}" onclick=" return coatCancel(this)" class="ml-3">
                             キャンセルする
                           </x-primary-button>
                         </form>
@@ -106,7 +106,7 @@
                       {{-- イベント用 --}}
                         <form method="POST" id="eventCancel_{{ $event->id }}" action="{{ route('event-reservation.cancel',['id' => $event->id]) }}">
                           @csrf
-                          <x-primary-button  data-id="{{ $event->id }}" onclick="eventCancel(this)" class="ml-3">
+                          <x-primary-button  data-id="{{ $event->id }}" onclick=" return eventCancel(this)" class="ml-3">
                             キャンセルする
                           </x-primary-button>
                         </form>
