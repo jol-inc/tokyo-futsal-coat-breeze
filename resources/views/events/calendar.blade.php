@@ -88,7 +88,7 @@
           <p class="text-blue-600">※テストの為、過去も選択可能</p> 
         </div> 
   
-        <form id="calendar-change" action="{{route('events.calendar.change')}}" method="GET">
+        <form id="calendar-change" action="{{route('events.calendar-change')}}" method="GET">
           <x-text-input  type="text" name="calendar" id="calendar" class="block mt-4 w-48 border-indigo-200 border-8" />
         </form>
 

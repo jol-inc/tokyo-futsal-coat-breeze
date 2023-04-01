@@ -14,6 +14,7 @@
                     {{ session('status') }}
                   </div>
                   @endif
+
                   <div class="text-2xl">
                     <p>～お客様～<br>
                     <p>▼コートレンタル<br>
