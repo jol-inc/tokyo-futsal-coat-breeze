@@ -68,7 +68,7 @@
                   </div>
                   {{-- 自分が既に予約していないかの確認 --}}
                   @if(!$ownReserveExists)
-                    {{-- <form method="POST" action="{{ route('event-reservation.reserve',['id' => $event->id]) }}"> --}}
+                    <form method="POST" action="{{ route('event-reservation.reserve',['id' => $event->id]) }}">
                     <form method="POST" id="reservation_{{ $event->id }}" action="{{ route('event-reservation.reserve',['id' => $event->id]) }}">
 
                       @csrf 
@@ -122,6 +122,7 @@
           </div>
       </div>
   </div>
+
 
   <script>
     function reservationPost(e){
