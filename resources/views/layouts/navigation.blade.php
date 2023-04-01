@@ -13,21 +13,23 @@
                 </div>
 
                 <!-- Navigation Links -->
+
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('events.calendar')" :active="request()->routeIs('events.calendar')">
+                        イベントカレンダー
+                    </x-nav-link>
+                </div>
                 {{-- <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('coat-reservation.index')" :active="request()->routeIs('coat-reservation.index')">
                         コートレンタル
                     </x-nav-link>
                 </div> --}}
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('coat-reservation.create')" :active="request()->routeIs('coat-reservation.create')">
-                        コートレンタル
-                    </x-nav-link>
-                </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('events.calendar')" :active="request()->routeIs('events.calendar')">
-                        イベントカレンダー
-                    </x-nav-link>
-                </div>
+                  <x-nav-link :href="route('coat-reservation.create')" :active="request()->routeIs('coat-reservation.create')">
+                      コートレンタル
+                  </x-nav-link>
+              </div>
+
                 {{-- <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}

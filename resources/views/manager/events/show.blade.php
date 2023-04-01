@@ -1,7 +1,7 @@
 <x-app-layout>
   <x-slot name="header">
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-          イベント詳細（マネージャー用）
+          店舗管理者（イベント詳細）
       </h2>
   </x-slot>
 
@@ -90,7 +90,7 @@
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
 
           <div class="max-w-2xl py-4 mx-auto">
-              <div class="text-center py-2">予約状況</div>
+              <div class="text-center py-2 text-2xl">予約状況</div>
               <table class="table-auto w-full text-left whitespace-no-wrap">
                 <thead>
                   <tr>

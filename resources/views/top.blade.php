@@ -14,7 +14,15 @@
                     {{ session('status') }}
                   </div>
                   @endif
-                    TOPページです。
+                  <div class="text-2xl">
+                    <p>コートレンタル： 1時間から予約可能（カレンダーで空の確認後、ご予約下さい）</p>
+                    <p>イベント　　： フットサルスクール、 大会 etc・・・。 （全て個人単位でお申込み下さい）</p>
+                  </div>
+
+                  <ul class="text-red-500 mt-12 text-lg">
+                    <li>※便宜上、店舗管理者もお客様として予約出来る仕様です。</li>
+                  </ul>
+
                 </div>
             </div>
         </div>
