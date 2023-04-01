@@ -59,7 +59,6 @@
                 </div>
              
 
-
                 <div class="md:flex justify-between items-end">
 
                   <div class="mt-4">
@@ -69,8 +68,7 @@
                   {{-- 自分が既に予約していない場合 --}}
                   @if(!$ownReserveExists)
                   
-                    <form method="POST" id="reservation_{{ $event->id }}" action="{{ route('event-reservation.reserve',['id' => $event->id]) }}">
-
+                    <form method="POST" id="eventReserve_{{ $event->id }}" action="{{ route('event-reservation.reserve',['id' => $event->id]) }}">
                       @csrf 
 
                       @if($reservablePeople <= 0 )
@@ -82,34 +80,32 @@
                           @endfor
                         </select>
 
-                        <x-primary-button  data-id="{{ $event->id }}" onclick="reservationPost(this)" class="ml-3">
-                          予約する
-                        </x-primary-button>
+                        <a href="#" data-id="{{ $event->id }}" onclick=" return eventReserve(this)" class="mx-4 py-2 px-6 text-white bg-gray-500 border-0 focus:outline-none hover:bg-gray-600 rounded">予約する</a>
                       @endif
                     </form>
+
                   @else
                     {{-- 現在以降の場合 --}}
                     @if( \Carbon\CarbonImmutable::parse($event->start_date)->format('Y-m-d H:i:s')  >   \Carbon\CarbonImmutable::now()->format('Y-m-d H:i:s')  )
 
                       <p class="text-green-600">既にご自分で予約済です。</p>
 
+                      @if ( $event->kind === 5 )
 
-                      @if ( $event->kind === 1 )
-                      {{-- コートレンタル用 --}}
-                        <form method="POST" id="coatCancel_{{ $event->id }}" action="{{ route('coat-reservation.cancel',['id' => $event->id]) }}">
-                          @csrf
-                          <x-primary-button  data-id="{{ $event->id }}" onclick=" return coatCancel(this)" class="ml-3">
-                            キャンセルする
-                          </x-primary-button>
-                        </form>
-                      @else
-                      {{-- イベント用 --}}
+                        {{-- イベント用 キャンセル --}}
                         <form method="POST" id="eventCancel_{{ $event->id }}" action="{{ route('event-reservation.cancel',['id' => $event->id]) }}">
                           @csrf
-                          <x-primary-button  data-id="{{ $event->id }}" onclick=" return eventCancel(this)" class="ml-3">
-                            キャンセルする
-                          </x-primary-button>
+                          <a href="#" data-id="{{ $event->id }}" onclick=" return eventCancel(this)" class="mx-4 py-2 px-6 text-white bg-gray-500 border-0 focus:outline-none hover:bg-gray-600 rounded">キャンセルする</a>
                         </form>
+
+                      @elseif( $event->kind === 1 )
+
+                        {{-- コートレンタル用 キャンセル--}}
+                        <form method="POST" id="coatCancel_{{ $event->id }}" action="{{ route('coat-reservation.cancel',['id' => $event->id]) }}">
+                          @csrf
+                          <a href="#" data-id="{{ $event->id }}" onclick=" return coatCancel(this)" class="mx-4 py-2 px-6 text-white bg-gray-500 border-0 focus:outline-none hover:bg-gray-600 rounded">キャンセルする</a>
+                        </form>
+
                       @endif
 
 
@@ -126,22 +122,16 @@
 
 
   <script>
-    function reservationPost(e){
+
+    // イベント予約
+    function eventReserve(e){
       "use strict";
       if ( confirm('本当に予約しますか？') ){
-        document.getElementById( "reserve_" + e.dataset.id ).submit();
+        document.getElementById( "eventReserve_" + e.dataset.id ).submit();
       }
     }
 
-
-    function coatCancel(e){
-      "use strict";
-      if ( confirm('本当にキャンセルしますか？') ){
-        document.getElementById( "coatCancel_" + e.dataset.id ).submit();
-      }
-    }
-
-
+    // イベント用 キャンセル
     function eventCancel(e){
       "use strict";
       if ( confirm('本当にキャンセルしますか？') ){
@@ -149,7 +139,13 @@
       }
     }
 
-
+    // コートレンタル用 キャンセル
+    function coatCancel(e){
+      "use strict";
+      if ( confirm('本当にキャンセルしますか？') ){
+        document.getElementById( "coatCancel_" + e.dataset.id ).submit();
+      }
+    }
 
   </script>
 
