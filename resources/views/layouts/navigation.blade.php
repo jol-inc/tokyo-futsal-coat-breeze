@@ -13,8 +13,13 @@
                 </div>
 
                 <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                {{-- <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('coat-reservation.index')" :active="request()->routeIs('coat-reservation.index')">
+                        コートレンタル
+                    </x-nav-link>
+                </div> --}}
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('coat-reservation.create')" :active="request()->routeIs('coat-reservation.create')">
                         コートレンタル
                     </x-nav-link>
                 </div>
@@ -30,14 +35,20 @@
                 </div> --}}
                 @can('customer-higher')
                   <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                      <x-nav-link :href="route('mypage.index')" :active="request()->routeIs('mypage.index')">
+                      {{-- <x-nav-link :href="route('mypage.index')" :active="request()->routeIs('mypage.index')">
+                          マイページ
+                      </x-nav-link> --}}
+                      <x-nav-link :href="route('mypage.events')" :active="request()->routeIs('mypage.events')">
                           マイページ
                       </x-nav-link>
                   </div>
                 @endcan
                 @can('manager-higher')
                   <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('manager.index')" :active="request()->routeIs('manager.index')">
+                    {{-- <x-nav-link :href="route('manager.index')" :active="request()->routeIs('manager.index')">
+                        店舗管理者
+                    </x-nav-link> --}}
+                    <x-nav-link :href="route('manager.events.index')" :active="request()->routeIs('manager.events.index')">
                         店舗管理者
                     </x-nav-link>
                   </div>
