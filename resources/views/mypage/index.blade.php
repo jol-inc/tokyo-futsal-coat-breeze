@@ -21,7 +21,7 @@
                       @endif
                       
 
-                      <h3 class="py-4 font-medium text-gray-900 text-lg">現在以降</h3> 
+                      <h3 class="py-4 font-medium text-gray-900 text-lg">今日以降</h3> 
                       <div class="w-full mb-8 mx-auto overflow-auto">
                         <table class="table-auto w-full text-left whitespace-no-wrap">
                           <thead>
