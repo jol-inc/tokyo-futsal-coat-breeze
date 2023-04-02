@@ -129,16 +129,25 @@
                     {{-- イベント名、 背景色 --}}
 
                     <a href="{{ route('events.show',['event' => $eventId ]) }}">
+
+
                       <div class="py-1 px-2 h-8 border border-gray-200 text-xs bg-blue-100">
+
+                        
                         {{ $eventName }}
                       </div>
                     </a>
+
                     {{-- 背景色のみ --}}
                     {{-- 開始時刻、終了時刻の差を30分で割り 1を引いた数値が無くなる迄背景色付div --}}
                     @if( $eventPeriod > 0)
                       @for($k = 0; $k < $eventPeriod; $k++)
                       <a href="{{ route('events.show',['event' => $eventId ]) }}">
+
+
                         <div class="py-1 px-2 h-8 border border-gray-200 bg-blue-100"></div>
+
+
                       </a>
                       @endfor
                       {{-- 背景色付divを数個作ってしまったので、残りの空白divの数を修正--}}
