@@ -48,7 +48,6 @@ Route::middleware('can:customer-higher','auth')->group(function(){
 Route::get('coat-reservation', [CoatReservationController::class, 'index'])->name('coat-reservation.index');
 Route::get('coat-reservation/create', [CoatReservationController::class, 'create'])->name('coat-reservation.create');
 Route::post('coat-reservation', [CoatReservationController::class, 'store'])->name('coat-reservation.store');
-// Route::post('coat-reservation/{id}/cancel', [CoatReservationController::class, 'cancel'])->name('coat-reservation.cancel');
 Route::post('coat-reservation/{event}/cancel', [CoatReservationController::class, 'cancel'])->name('coat-reservation.cancel');
 
 
