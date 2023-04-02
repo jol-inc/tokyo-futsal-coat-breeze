@@ -5,92 +5,109 @@
       </h2>
   </x-slot>
 
+
+
+  @php
+  define('EVENT_TIME',[
+    // const EVENT_TIME = [
+    '08:00:00',
+    '08:30:00',
+    '09:00:00',
+    '09:30:00',
+    '10:00:00',
+    '10:30:00',
+    '11:00:00',
+    '11:30:00',
+    '12:00:00',
+    '12:30:00',
+    '13:00:00',
+    '13:30:00',
+    '14:00:00',
+    '14:30:00',
+    '15:00:00',
+    '15:30:00',
+    '16:00:00',
+    '16:30:00',
+    '17:00:00',
+    '17:30:00',
+    '18:00:00',
+    '18:30:00',
+    '19:00:00',
+    '19:30:00',
+    '20:00:00',
+    '20:30:00',
+    '21:00:00',
+    '21:30:30',
+    '22:00:00',
+    '22:30:30',
+    '23:00:00',
+    // ];
+      ]);
+    define('CALENDAR_LEFT_TIME',[
+    // const CALENDAR_LEFT_TIME = [
+    '08:00',
+    '08:30',
+    '09:00',
+    '09:30',
+    '10:00',
+    '10:30',
+    '11:00',
+    '11:30',
+    '12:00',
+    '12:30',
+    '13:00',
+    '13:30',
+    '14:00',
+    '14:30',
+    '15:00',
+    '15:30',
+    '16:00',
+    '16:30',
+    '17:00',
+    '17:30',
+    '18:00',
+    '18:30',
+    '19:00',
+    '19:30',
+    '20:00',
+    '20:30',
+    '21:00',
+    '21:30',
+    '22:00',
+    '22:30',
+    '23:00',
+    // ];
+    ]);
+  @endphp
+
+
+
   <div class="py-12">
     <div class="event-calendar mx-auto sm:px-6 lg:px-8 flex">
-      <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mx-auto">
+      <div class="pt-4 bg-white overflow-hidden shadow-sm sm:rounded-lg mx-auto">
 
 
-        @php
-        define('EVENT_TIME',[
-          // const EVENT_TIME = [
-          '08:00:00',
-          '08:30:00',
-          '09:00:00',
-          '09:30:00',
-          '10:00:00',
-          '10:30:00',
-          '11:00:00',
-          '11:30:00',
-          '12:00:00',
-          '12:30:00',
-          '13:00:00',
-          '13:30:00',
-          '14:00:00',
-          '14:30:00',
-          '15:00:00',
-          '15:30:00',
-          '16:00:00',
-          '16:30:00',
-          '17:00:00',
-          '17:30:00',
-          '18:00:00',
-          '18:30:00',
-          '19:00:00',
-          '19:30:00',
-          '20:00:00',
-          '20:30:00',
-          '21:00:00',
-          '21:30:30',
-          '22:00:00',
-          '22:30:30',
-          '23:00:00',
-          // ];
-            ]);
-          define('CALENDAR_LEFT_TIME',[
-          // const CALENDAR_LEFT_TIME = [
-          '08:00',
-          '08:30',
-          '09:00',
-          '09:30',
-          '10:00',
-          '10:30',
-          '11:00',
-          '11:30',
-          '12:00',
-          '12:30',
-          '13:00',
-          '13:30',
-          '14:00',
-          '14:30',
-          '15:00',
-          '15:30',
-          '16:00',
-          '16:30',
-          '17:00',
-          '17:30',
-          '18:00',
-          '18:30',
-          '19:00',
-          '19:30',
-          '20:00',
-          '20:30',
-          '21:00',
-          '21:30',
-          '22:00',
-          '22:30',
-          '23:00',
-          // ];
-          ]);
-        @endphp
 
-        <div class="text-left text-sm">
-          日付を選択して下さい。本日から最大30日先まで選択可能です。
-          <p class="text-blue-600">※テストの為、過去も選択可能</p> 
-        </div> 
-  
-        <form id="calendar-change" action="{{route('events.calendar-change')}}" method="GET">
-          <x-text-input  type="text" name="calendar" id="calendar" class="block mt-4 w-48 border-indigo-200 border-8" />
-        </form>
+        <div class="flex justify-around">
+
+          <div>
+            <div class="text-left text-sm">
+              日付を選択して下さい。本日から最大30日先まで選択可能です。
+              <p class="text-blue-600">※テストの為、過去も選択可能</p> 
+            </div> 
+            <form id="calendar-change" action="{{route('events.calendar-change')}}" method="GET">
+              <x-text-input  type="text" name="calendar" id="calendar" class="block mt-4 w-48 border-indigo-200 border-8" />
+            </form>
+          </div>
+
+          <div>
+            <div class="py-1 px-2 h-8 border border-gray-500 text-xs ">空白はコートレンタル可能</div>  
+            <div class="py-1 px-2 h-8 border border-gray-200 text-xs bg-blue-100">予約可能イベント</div>  
+            <div class="py-1 px-2 h-8 border border-gray-200 text-xs bg-green-100">自分で予約済</div>
+            <div class="py-1 px-2 h-8 border border-gray-200 text-xs bg-red-100">満員</div>
+          </div>
+
+        </div>
 
         {{-- ここでFLEXを効かせている（以下横並び） --}}
         <div class="flex border border-green-400 mx-auto my-8">
