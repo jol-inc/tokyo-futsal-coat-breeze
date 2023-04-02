@@ -128,28 +128,37 @@
                     @endphp
                     {{-- イベント名、 背景色 --}}
 
-                    <a href="{{ route('events.show',['event' => $eventId ]) }}">
+                    <a href="{{ route('events.show',['event' => $eventId ]) }}">                       
+
+                      {{-- 背景色関連のPHP --}}
+                      @php
+                        $event = \DB::table('events')->where('id',$eventId)->latest()->first();
 
 
-
-@php
-  $event = \DB::table('events')->where('id',$eventId)->latest()->first();
-
-  // Service 切り離し
-  $reservablePeople = \App\Services\EventService::reservablePeopleFromCalendar($event,$eventId);
-@endphp
-
-{{-- 満員の時 --}}
-@if ( $reservablePeople <= 0 )
-  <div class="py-1 px-2 h-8 border border-gray-200 text-xs bg-red-100">
-@else
-  <div class="py-1 px-2 h-8 border border-gray-200 text-xs bg-blue-100">  
-@endif
+                        // 自分が既に予約していないかの確認変数
+                        $ownReserveExists = \DB::table('event_user')
+                        ->where('user_id','=',\Auth::id())
+                        ->where('event_id','=',$event->id)
+                        ->whereNull('canceled_date')
+                        ->orderBy('created_at','desc')
+                        ->limit(1)
+                        ->exists();
 
 
-                      {{-- <div class="py-1 px-2 h-8 border border-gray-200 text-xs bg-blue-100"> --}}
+                        // Service 切り離し 予約可能人数
+                        $reservablePeople = \App\Services\EventService::reservablePeopleFromCalendar($event,$eventId);
+                      @endphp
 
-
+                      {{-- 自分で予約済の時 --}}
+                      @if($ownReserveExists)
+                        <div class="py-1 px-2 h-8 border border-gray-200 text-xs bg-green-100">
+                      {{-- 満員の時 --}}
+                      @elseif($reservablePeople <= 0)
+                        <div class="py-1 px-2 h-8 border border-gray-200 text-xs bg-red-100">
+                      {{--それ以外の時 --}}
+                      @else
+                        <div class="py-1 px-2 h-8 border border-gray-200 text-xs bg-blue-100">  
+                      @endif
                         {{ $eventName }}
                       </div>
                     </a>
@@ -158,18 +167,20 @@
                     {{-- 開始時刻、終了時刻の差を30分で割り 1を引いた数値が無くなる迄背景色付div --}}
                     @if( $eventPeriod > 0)
                       @for($k = 0; $k < $eventPeriod; $k++)
-                      <a href="{{ route('events.show',['event' => $eventId ]) }}">
+                        <a href="{{ route('events.show',['event' => $eventId ]) }}">
 
-{{-- 満員の時 --}}
-@if ( $reservablePeople <= 0 )
-  <div class="py-1 px-2 h-8 border border-gray-200 bg-red-100"></div>
-@else
-  <div class="py-1 px-2 h-8 border border-gray-200 bg-blue-100"></div>
-@endif
-
-                        {{-- <div class="py-1 px-2 h-8 border border-gray-200 bg-blue-100"></div> --}}
-
-                      </a>
+                        {{-- 自分で予約済の時 --}}
+                        @if($ownReserveExists)
+                          <div class="py-1 px-2 h-8 border border-gray-200 text-xs bg-green-100">
+                        {{-- 満員の時 --}}
+                        @elseif($reservablePeople <= 0)
+                          <div class="py-1 px-2 h-8 border border-gray-200 text-xs bg-red-100">
+                        {{--それ以外の時 --}}
+                        @else
+                          <div class="py-1 px-2 h-8 border border-gray-200 text-xs bg-blue-100">  
+                        @endif
+                        </div>
+                       </a>
                       @endfor
                       {{-- 背景色付divを数個作ってしまったので、残りの空白divの数を修正--}}
                       @php $j += $eventPeriod @endphp
