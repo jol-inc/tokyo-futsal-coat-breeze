@@ -68,8 +68,7 @@
                   {{-- 自分が予約していない場合 --}}
                   @if(!$ownReserveExists)
                   
-                    {{-- <form method="POST" id="eventReserve_{{ $event->id }}" action="{{ route('event-reservation.reserve',['id' => $event->id]) }}"> --}}
-                    <form method="POST" id="eventReserve_{{ $event->id }}" action="{{ route('event-reservation.reserve',['event' => $event->id]) }}">
+                    <form method="POST" id="eventReserve_{{ $event->id }}" action="{{ route('event-reservation.reserve',$event->id) }}">
                       @csrf 
 
                       @if($reservablePeople <= 0 )

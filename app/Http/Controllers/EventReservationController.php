@@ -12,11 +12,9 @@ use Carbon\CarbonImmutable;
 class EventReservationController extends Controller
 {
 
-  // public function reserve($id, Request $request){
   public function reserve(Event $event, Request $request){
 
     // 何かの不具合で非表示のイベントが飛んで来た場合、早期リターン
-    // if(Event::findOrFail($id)->is_visible === false){
     if($event->is_visible === false){
       return back()->with('status', '非表示中のイベントは予約出来ません。');
     }
@@ -27,7 +25,6 @@ class EventReservationController extends Controller
     ->select('event_id', DB::raw('sum(number_of_people) as number_of_people'))
     ->whereNull('canceled_date')
     ->groupBy('event_id')
-    // ->having('event_id', $id)
     ->having('event_id', $event->id)
     ->first();
 
@@ -35,7 +32,6 @@ class EventReservationController extends Controller
     // 自分が既に予約していないかの確認変数
     $ownReserveExists = DB::table('event_user')
     ->where('user_id','=',Auth::id())
-    // ->where('event_id','=',$id)
     ->where('event_id','=',$event->id)
     ->whereNull('canceled_date')
     ->orderBy('created_at','desc')
@@ -49,7 +45,6 @@ class EventReservationController extends Controller
 
         EventUser::create([
           'user_id' => Auth::id(),
-          // 'event_id' => $id,
           'event_id' => $event->id,
           'number_of_people' => $request->number_of_people,
         ]);
