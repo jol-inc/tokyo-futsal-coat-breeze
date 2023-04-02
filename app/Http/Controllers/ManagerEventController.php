@@ -45,6 +45,7 @@ class ManagerEventController extends Controller
   }
 
 
+
   public function store(StoreEventRequest $request)
   {
 
@@ -76,6 +77,7 @@ class ManagerEventController extends Controller
     return redirect()->route('manager.events.index');
   }
 
+  
 
   public function show(Event $event)
   {
