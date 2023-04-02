@@ -50,14 +50,16 @@ class EventReservationController extends Controller
         ]);
 
         session()->flash('status', '予約okです');
-        return redirect()->route('mypage.events');
+        // return redirect()->route('mypage.events');
+        return redirect()->route('mypage.index');
       }else{
         session()->flash('status', '人数的に予約出来ませんでした。他の方が同時に予約した可能性もあります');
         return back();
       }
     }else{
         session()->flash('status', '既にご自分で予約済です。');
-        return redirect()->route('mypage.events');
+        // return redirect()->route('mypage.events');
+        return redirect()->route('mypage.index');
     }
 
   }
@@ -87,9 +89,11 @@ class EventReservationController extends Controller
         'canceled_date' => CarbonImmutable::now()->format('Y-m-d H:i:s'),
       ]);
 
-      return redirect()->route('mypage.events')->with('status','キャンセルしました。');
+      // return redirect()->route('mypage.events')->with('status','キャンセルしました。');
+      return redirect()->route('mypage.index')->with('status','キャンセルしました。');
     }else{
-      return redirect()->route('mypage.events')->with('status','過去のイベントはキャンセル出来ません。');
+      // return redirect()->route('mypage.events')->with('status','過去のイベントはキャンセル出来ません。');
+      return redirect()->route('mypage.index')->with('status','過去のイベントはキャンセル出来ません。');
     }
 
 

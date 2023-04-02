@@ -66,7 +66,8 @@ class CoatReservationController extends Controller
 
 
       session()->flash('status', 'コートレンタル予約okです');
-      return redirect()->route('mypage.events');
+      // return redirect()->route('mypage.events');
+      return redirect()->route('mypage.index');
 
     }
 
@@ -110,9 +111,9 @@ class CoatReservationController extends Controller
         ]);
 
 
-        return redirect()->route('mypage.events')->with('status','コートレンタルをキャンセルしました。');
+        return redirect()->route('mypage.index')->with('status','コートレンタルをキャンセルしました。');
       }else{
-        return redirect()->route('mypage.events')->with('status','過去のコートレンタルはキャンセル出来ません。');
+        return redirect()->route('mypage.index')->with('status','過去のコートレンタルはキャンセル出来ません。');
       }
 
     }

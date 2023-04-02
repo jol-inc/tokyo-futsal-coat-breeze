@@ -33,7 +33,6 @@ Route::middleware('can:customer-higher','auth')->group(function(){
 
 // コートレンタル
 Route::get('coat-reservation', [CoatReservationController::class, 'index'])->name('coat-reservation.index');
-// Route::get('coat-reservation/reserve', [CoatReservationController::class, 'reserve'])->name('coat-reservation.reserve');
 Route::post('coat-reservation', [CoatReservationController::class, 'store'])->name('coat-reservation.store');
 Route::post('coat-reservation/{event}/cancel', [CoatReservationController::class, 'cancel'])->name('coat-reservation.cancel');
 
@@ -44,7 +43,6 @@ Route::prefix('mypage')
 ->middleware(['auth'])
 ->group(function(){
   Route::get('/', [MypageController::class, 'index'])->name('mypage.index');
-  Route::get('events', [MypageController::class, 'events'])->name('mypage.events');
 });
 
 
