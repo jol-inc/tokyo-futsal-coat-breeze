@@ -25,14 +25,10 @@
                     </x-nav-link>
                 </div> --}}
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-{{-- <x-nav-link :href="route('coat-reservation.create')" :active="request()->routeIs('coat-reservation.create')">
-    コートレンタル
-</x-nav-link> --}}
-          {{-- <x-nav-link :href="route('coat-reservation.reserve')" :active="request()->routeIs('coat-reservation.create')"> --}}
                   <x-nav-link :href="route('coat-reservation.reserve')" :active="request()->routeIs('coat-reservation.reserve')">
                       コートレンタル
                   </x-nav-link>
-              </div>
+                </div>
 
                 {{-- <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
@@ -41,12 +37,12 @@
                 </div> --}}
                 @can('customer-higher')
                   <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                      {{-- <x-nav-link :href="route('mypage.index')" :active="request()->routeIs('mypage.index')">
-                          マイページ
-                      </x-nav-link> --}}
-                      <x-nav-link :href="route('mypage.events')" :active="request()->routeIs('mypage.events')">
-                          マイページ
-                      </x-nav-link>
+                    {{-- <x-nav-link :href="route('mypage.index')" :active="request()->routeIs('mypage.index')">
+                        マイページ
+                    </x-nav-link> --}}
+                    <x-nav-link :href="route('mypage.events')" :active="request()->routeIs('mypage.events')">
+                        マイページ
+                    </x-nav-link>
                   </div>
                 @endcan
                 @can('manager-higher')
@@ -137,31 +133,50 @@
 
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
+
         <div class="pt-2 pb-3 space-y-1">
+          <x-responsive-nav-link :href="route('events.calendar')" :active="request()->routeIs('events.calendar')">
+            イベントカレンダー
+          </x-responsive-nav-link>
+        </div>
+
+        {{-- <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('coat-reservation.index')" :active="request()->routeIs('coat-reservation.index')">
               コートレンタル
             </x-responsive-nav-link>
-        </div>
+        </div> --}}
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('events.calendar')" :active="request()->routeIs('events.calendar')">
-              イベントカレンダー
+            <x-responsive-nav-link :href="route('coat-reservation.reserve')" :active="request()->routeIs('coat-reservation.index')">
+              コートレンタル
             </x-responsive-nav-link>
         </div>
+
         {{-- <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
         </div> --}}
+
         @can('customer-higher')
-          <div class="pt-2 pb-3 space-y-1">
+          {{-- <div class="pt-2 pb-3 space-y-1">
               <x-responsive-nav-link :href="route('mypage.index')" :active="request()->routeIs('mypage.index')">
+                マイページ
+              </x-responsive-nav-link>
+          </div> --}}
+          <div class="pt-2 pb-3 space-y-1">
+              <x-responsive-nav-link :href="route('mypage.events')" :active="request()->routeIs('mypage.events')">
                 マイページ
               </x-responsive-nav-link>
           </div>
         @endcan
         @can('manager-higher')
-          <div class="pt-2 pb-3 space-y-1">
+          {{-- <div class="pt-2 pb-3 space-y-1">
               <x-responsive-nav-link :href="route('manager.index')" :active="request()->routeIs('manager.index')">
+                店舗管理者
+              </x-responsive-nav-link>
+          </div> --}}
+          <div class="pt-2 pb-3 space-y-1">
+              <x-responsive-nav-link :href="route('manager.events.index')" :active="request()->routeIs('manager.events.index')">
                 店舗管理者
               </x-responsive-nav-link>
           </div>
