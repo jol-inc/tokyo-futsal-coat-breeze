@@ -93,7 +93,7 @@
                       @if ( $event->kind === 5 )
 
                         {{-- イベント用 キャンセル --}}
-                        <form method="POST" id="eventCancel_{{ $event->id }}" action="{{ route('event-reservation.cancel',['id' => $event->id]) }}">
+                        <form method="POST" id="eventCancel_{{ $event->id }}" action="{{ route('event-reservation.cancel',$event->id) }}">
                           @csrf
                           <a href="#" data-id="{{ $event->id }}" onclick=" return eventCancel(this)" class="mx-4 py-2 px-6 text-white bg-gray-500 border-0 focus:outline-none hover:bg-gray-600 rounded">キャンセルする</a>
                         </form>

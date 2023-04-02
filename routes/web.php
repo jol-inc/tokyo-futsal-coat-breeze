@@ -40,7 +40,7 @@ Route::get('events/{event}', [EventController::class, 'show'])->name('events.sho
 //イベント予約
 Route::middleware('can:customer-higher','auth')->group(function(){
   Route::post('event-reservation/{event}', [EventReservationController::class, 'reserve'])->name('event-reservation.reserve');
-  Route::post('event-reservation/{id}/cancel', [EventReservationController::class, 'cancel'])->name('event-reservation.cancel');
+  Route::post('event-reservation/{event}/cancel', [EventReservationController::class, 'cancel'])->name('event-reservation.cancel');
 });
 
 

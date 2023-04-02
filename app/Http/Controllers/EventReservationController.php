@@ -64,12 +64,12 @@ class EventReservationController extends Controller
 
 
 
-  public function cancel($id){
+  public function cancel(Event $event){
 
     // start_dateカラムを取得したいのでevent_userテーブルに eventsテーブルを join
     $eventUserJoin = DB::table('event_user')
     ->join('events','event_user.event_id', '=', 'events.id')
-    ->where('event_user.event_id',$id)
+    ->where('event_user.event_id',$event->id)
     ->where('event_user.user_id',Auth::id())
     ->select('event_user.*','start_date')
     ->orderBy('event_user.created_at','desc')
@@ -79,7 +79,7 @@ class EventReservationController extends Controller
     // 本日以降のみキャンセル可能にする
     if( \Carbon\CarbonImmutable::parse($eventUserJoin->start_date)->format('Y-m-d H:i:s')  >  \Carbon\CarbonImmutable::today()->format('Y-m-d H:i:s')){
 
-      EventUser::where('event_user.event_id',$id)
+      EventUser::where('event_user.event_id',$event->id)
       ->where('event_user.user_id',Auth::id())
       ->latest()
       ->first()
