@@ -65,10 +65,11 @@
                     <x-input-label for="max_people" value="定員数" />
                     {{ $event->max_people }}
                   </div>
-                  {{-- 自分が既に予約していない場合 --}}
+                  {{-- 自分が予約していない場合 --}}
                   @if(!$ownReserveExists)
                   
-                    <form method="POST" id="eventReserve_{{ $event->id }}" action="{{ route('event-reservation.reserve',['id' => $event->id]) }}">
+                    {{-- <form method="POST" id="eventReserve_{{ $event->id }}" action="{{ route('event-reservation.reserve',['id' => $event->id]) }}"> --}}
+                    <form method="POST" id="eventReserve_{{ $event->id }}" action="{{ route('event-reservation.reserve',['event' => $event->id]) }}">
                       @csrf 
 
                       @if($reservablePeople <= 0 )

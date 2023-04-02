@@ -29,17 +29,21 @@ Route::get('/', function () {
     return view('top');
 })->name('/');
 
+
 // カレンダー
 Route::get('events/calendar', [EventController::class, 'calendar'])->name('events.calendar');
 Route::get('events/calendar-change', [EventController::class, 'calendarChange'])->name('events.calendar-change');
 // イベント詳細
 Route::get('events/{event}', [EventController::class, 'show'])->name('events.show');
 
+
 //イベント予約
 Route::middleware('can:customer-higher','auth')->group(function(){
-  Route::post('event-reservation/{id}', [EventReservationController::class, 'reserve'])->name('event-reservation.reserve');
+  // Route::post('event-reservation/{id}', [EventReservationController::class, 'reserve'])->name('event-reservation.reserve');
+  Route::post('event-reservation/{event}', [EventReservationController::class, 'reserve'])->name('event-reservation.reserve');
   Route::post('event-reservation/{id}/cancel', [EventReservationController::class, 'cancel'])->name('event-reservation.cancel');
 });
+
 
 // コートレンタル
 Route::get('coat-reservation', [CoatReservationController::class, 'index'])->name('coat-reservation.index');
@@ -53,6 +57,7 @@ Route::post('coat-reservation/{id}/cancel', [CoatReservationController::class, '
 //     return view('dashboard');
 // })->middleware(['auth', 'verified'])->name('dashboard');
 // 
+
 
 // マイページ
 Route::prefix('mypage')
