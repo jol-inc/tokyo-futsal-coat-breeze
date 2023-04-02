@@ -20,6 +20,7 @@ Route::get('/', function () {
 // カレンダー
 Route::get('events/calendar', [EventController::class, 'calendar'])->name('events.calendar');
 Route::get('events/calendar-change', [EventController::class, 'calendarChange'])->name('events.calendar-change');
+
 // イベント詳細
 Route::get('events/{event}', [EventController::class, 'show'])->name('events.show');
 
@@ -39,8 +40,7 @@ Route::post('coat-reservation/{event}/cancel', [CoatReservationController::class
 
 // マイページ
 Route::prefix('mypage')
-// ->middleware(['auth','can:user-higher'])
-->middleware(['auth'])
+->middleware(['auth','can:customer-higher'])
 ->group(function(){
   Route::get('/', [MypageController::class, 'index'])->name('mypage.index');
 });
