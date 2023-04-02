@@ -131,9 +131,25 @@
                     <a href="{{ route('events.show',['event' => $eventId ]) }}">
 
 
-                      <div class="py-1 px-2 h-8 border border-gray-200 text-xs bg-blue-100">
 
-                        
+@php
+  $event = \DB::table('events')->where('id',$eventId)->latest()->first();
+
+  // Service 切り離し
+  $reservablePeople = \App\Services\EventService::reservablePeopleFromCalendar($event,$eventId);
+@endphp
+
+{{-- 満員の時 --}}
+@if ( $reservablePeople <= 0 )
+  <div class="py-1 px-2 h-8 border border-gray-200 text-xs bg-red-100">
+@else
+  <div class="py-1 px-2 h-8 border border-gray-200 text-xs bg-blue-100">  
+@endif
+
+
+                      {{-- <div class="py-1 px-2 h-8 border border-gray-200 text-xs bg-blue-100"> --}}
+
+
                         {{ $eventName }}
                       </div>
                     </a>
@@ -144,9 +160,14 @@
                       @for($k = 0; $k < $eventPeriod; $k++)
                       <a href="{{ route('events.show',['event' => $eventId ]) }}">
 
+{{-- 満員の時 --}}
+@if ( $reservablePeople <= 0 )
+  <div class="py-1 px-2 h-8 border border-gray-200 bg-red-100"></div>
+@else
+  <div class="py-1 px-2 h-8 border border-gray-200 bg-blue-100"></div>
+@endif
 
-                        <div class="py-1 px-2 h-8 border border-gray-200 bg-blue-100"></div>
-
+                        {{-- <div class="py-1 px-2 h-8 border border-gray-200 bg-blue-100"></div> --}}
 
                       </a>
                       @endfor
