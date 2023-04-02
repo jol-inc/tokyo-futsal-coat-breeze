@@ -21,9 +21,9 @@ class CoatReservationController extends Controller
 
 
 
-    public function reserve(){
-      return view('coat-reservation.reserve');
-    }
+    // public function reserve(){
+    //   return view('coat-reservation.reserve');
+    // }
 
 
 
@@ -35,7 +35,8 @@ class CoatReservationController extends Controller
       // 存在したら
       if($check){
         session()->flash('status', 'この時間帯は既に他の予約が存在します。');
-        return to_route('coat-reservation.reserve');
+        // return to_route('coat-reservation.reserve');
+        return to_route('coat-reservation.index');
       }
 
 

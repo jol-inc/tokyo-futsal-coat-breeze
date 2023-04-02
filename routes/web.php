@@ -9,21 +9,8 @@ use App\Http\Controllers\MyPageController;
 use App\Http\Controllers\CoatReservationController;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
 
-// WELCOMEページ
-// Route::get('/', function () {
-//     return view('welcome');
-// })->name('/');
+
 // ＴＯＰページ
 Route::get('/', function () {
     return view('top');
@@ -37,7 +24,7 @@ Route::get('events/calendar-change', [EventController::class, 'calendarChange'])
 Route::get('events/{event}', [EventController::class, 'show'])->name('events.show');
 
 
-//イベント予約
+//通常イベント予約
 Route::middleware('can:customer-higher','auth')->group(function(){
   Route::post('event-reservation/{event}', [EventReservationController::class, 'reserve'])->name('event-reservation.reserve');
   Route::post('event-reservation/{event}/cancel', [EventReservationController::class, 'cancel'])->name('event-reservation.cancel');
@@ -46,16 +33,9 @@ Route::middleware('can:customer-higher','auth')->group(function(){
 
 // コートレンタル
 Route::get('coat-reservation', [CoatReservationController::class, 'index'])->name('coat-reservation.index');
-Route::get('coat-reservation/reserve', [CoatReservationController::class, 'reserve'])->name('coat-reservation.reserve');
+// Route::get('coat-reservation/reserve', [CoatReservationController::class, 'reserve'])->name('coat-reservation.reserve');
 Route::post('coat-reservation', [CoatReservationController::class, 'store'])->name('coat-reservation.store');
 Route::post('coat-reservation/{event}/cancel', [CoatReservationController::class, 'cancel'])->name('coat-reservation.cancel');
-
-
-
-// ダッシュボードRoute::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
-// 
 
 
 // マイページ

@@ -24,8 +24,13 @@
                         コートレンタル
                     </x-nav-link>
                 </div> --}}
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                {{-- <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                   <x-nav-link :href="route('coat-reservation.reserve')" :active="request()->routeIs('coat-reservation.reserve')">
+                      コートレンタル
+                  </x-nav-link>
+                </div> --}}
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                  <x-nav-link :href="route('coat-reservation.index')" :active="request()->routeIs('coat-reservation.index')">
                       コートレンタル
                   </x-nav-link>
                 </div>
@@ -145,8 +150,13 @@
               コートレンタル
             </x-responsive-nav-link>
         </div> --}}
+        {{-- <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link :href="route('coat-reservation.reserve')" :active="request()->routeIs('coat-reservation.reserve')">
+              コートレンタル
+            </x-responsive-nav-link>
+        </div> --}}
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('coat-reservation.reserve')" :active="request()->routeIs('coat-reservation.index')">
+            <x-responsive-nav-link :href="route('coat-reservation.index')" :active="request()->routeIs('coat-reservation.index')">
               コートレンタル
             </x-responsive-nav-link>
         </div>
