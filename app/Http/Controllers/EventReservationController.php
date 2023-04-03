@@ -49,17 +49,15 @@ class EventReservationController extends Controller
           'number_of_people' => $request->number_of_people,
         ]);
 
-        session()->flash('status', '予約okです');
-        // return redirect()->route('mypage.events');
-        return redirect()->route('mypage.index');
+        return redirect()->route('mypage.index')->with(['status' =>'info','message' =>'予約okです']);
+
       }else{
-        session()->flash('status', '人数的に予約出来ませんでした。他の方が同時に予約した可能性もあります');
-        return back();
+        return back()->with(['status' =>'alert','message' =>'人数的に予約出来ませんでした。他の方が同時に予約した可能性もあります']);        
       }
+      
     }else{
-        session()->flash('status', '既にご自分で予約済です。');
-        // return redirect()->route('mypage.events');
-        return redirect()->route('mypage.index');
+        return redirect()->route('mypage.index')->with(['status' =>'alert','message' =>'既にご自分で予約済です。']);        
+
     }
 
   }
