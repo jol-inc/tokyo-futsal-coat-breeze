@@ -40,7 +40,9 @@
               </div>
               @endif
 
-              <form method="POST" action="{{ route('manager.events.update',['event' => $event->id]) }}">
+
+
+              {{-- <form method="POST" action="{{ route('manager.events.update',['event' => $event->id]) }}">
                 @csrf
                 @method('put')
                 <div>
@@ -84,6 +86,96 @@
                 </div>
 
               </form>
+
+
+
+ <br><br><br><br><br><br><br> --}}
+
+
+              <form method="POST" action="{{ route('manager.events.update',['event' => $event->id]) }}">
+                @csrf
+                @method('put')
+              {{-- <form method="GET" action="{{ route('manager.events.edit',['event' => $event->id]) }}"> --}}
+                <table class="table-auto w-full text-left whitespace-no-wrap">
+                    <tr>
+                      <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl"><x-input-label for="event_name" value="イベントID" /></th>
+                      <td class="px-4 py-3">{{ $event->id }}</td>
+                    </tr>
+                    <tr>
+                      <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl"><x-input-label for="event_name" value="イベント名" /></th>
+                      <td class="px-4 py-3"><x-text-input id="event_name" class="block mt-1 w-full" type="text" name="event_name" value=" {{ $event->name }} " required /></td>
+                    </tr>
+                    <tr>
+                      <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl"><x-input-label for="information" value="イベント詳細" /></th>
+                      <td class="px-4 py-3">
+                        <textarea name="information" id="information" rows="3" class="block mt-1 w-full" required>{{ $event->information }}</textarea>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl"><x-input-label for="event_date" value="イベント日付" /></th>
+                      <td class="px-4 py-3">
+                        <x-text-input id="event_date" class="block mt-1 w-full" type="text" name="event_date" value="{{ $eventDate }}" required />
+                      </td>
+                    </tr>
+                    <tr>
+                      <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl"><x-input-label for="start_time" value="開始時間" /></th>
+                      <td class="px-4 py-3">
+                        <x-text-input id="start_time" class="block mt-1 w-full" type="text" name="start_time"  value="{{ $startTime }}" required />
+                      </td>
+                    </tr>
+                    <tr>
+                      <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl"><x-input-label for="end_time" value="終了時間" /></th>
+                      <td class="px-4 py-3"> 
+                        <x-text-input id="end_time" class="block mt-1 w-full" type="text" name="end_time" value="{{ $endTime }}" required />
+                      </td>
+                    </tr>
+                    <tr>
+                      <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl"><x-input-label for="max_people" value="定員数" /></th>
+                      <td class="px-4 py-3">
+                        <x-text-input id="max_people" class="block mt-1 w-full" type="number" name="max_people" value="{{ $event->max_people }}" required />
+                      </td>
+                    </tr>
+                    <tr>
+                      <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl"><x-input-label for="is_visible" value="イベントカレンダー等に表示or非表示" /></th>
+                      <td class="px-4 py-3">
+                        <div>
+                          @if($event->is_visible)
+                          表示中
+                          @else
+                            非表示中
+                          @endif
+                        </div>                    
+                        <input type="radio" name="is_visible" value="1" @if($event->is_visible === 1) checked @endif>表示
+                        <input type="radio" name="is_visible" value="0" @if($event->is_visible === 0) checked @endif>非表示
+                      </td>
+                    </tr>
+                    <tr>
+                      <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl"></th>
+                      <td class="px-4 py-3">
+                        {{-- 本日以降なら表示 --}}
+                        @if( $eventDate >= \Carbon\Carbon::today()->format('Y年m月d日'))
+                          <x-primary-button class="ml-3">
+                            編集実行する
+                          </x-primary-button>
+                        @endif
+                      </td>
+                    </tr>
+                </table>
+              </form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             </div>
           </div>
       </div>
