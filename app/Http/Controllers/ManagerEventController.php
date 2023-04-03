@@ -32,7 +32,7 @@ class ManagerEventController extends Controller
     function($join){$join->on('events.id', '=', 'reservedPeople.event_id');})
     ->whereNull('canceled_date') //コートレンタルのキャンセルを除く （eventsテーブル）
     ->whereDate('start_date','>=',$today)
-    ->orderBy('start_date','desc')
+    ->orderBy('start_date','asc')
     ->paginate(10);
 
     return view('manager.events.index',compact('events'));

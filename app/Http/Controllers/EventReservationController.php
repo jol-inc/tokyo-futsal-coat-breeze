@@ -14,6 +14,8 @@ class EventReservationController extends Controller
 
   public function reserve(Event $event, Request $request){
 
+// {{  $event->is_visible }}
+
     // 何かの不具合で非表示のイベントが飛んで来た場合、早期リターン
     if($event->is_visible === false){
       return back()->with('status', '非表示中のイベントは予約出来ません。');
