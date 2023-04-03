@@ -36,9 +36,7 @@ class CoatReservationController extends Controller
 
       // 存在したら
       if($check){
-        session()->flash('status', 'この時間帯は既に他の予約が存在します。');
-        // return to_route('coat-reservation.reserve');
-        return to_route('coat-reservation.index');
+        return to_route('coat-reservation.index')->with(['status' =>'alert','message' =>'この時間帯は既に他の予約が存在します。']);
       }
 
 
@@ -79,11 +77,7 @@ class CoatReservationController extends Controller
         throw $e; 
       }
 
-
-
-      session()->flash('status', 'コートレンタル予約okです');
-      // return redirect()->route('mypage.events');
-      return redirect()->route('mypage.index');
+      return redirect()->route('mypage.index')->with(['status' =>'info','message' =>'コートレンタル予約okです']);
 
     }
 
@@ -135,9 +129,12 @@ class CoatReservationController extends Controller
           throw $e; 
         }
 
-        return redirect()->route('mypage.index')->with('status','コートレンタルをキャンセルしました。');
+        // return redirect()->route('mypage.index')->with('status','コートレンタルをキャンセルしました。');
+        return redirect()->route('mypage.index')->with(['status' =>'info','message' =>'コートレンタルをキャンセルしました。']);
       }else{
-        return redirect()->route('mypage.index')->with('status','過去のコートレンタルはキャンセル出来ません。');
+        // return redirect()->route('mypage.index')->with('status','過去のコートレンタルはキャンセル出来ません。');
+        // return redirect()->route('mypage.index')->with(['status' =>'alert','message' =>'過去のコートレンタルはキャンセル出来ません。']);
+        return redirect()->back()->with(['status' =>'alert','message' =>'過去のコートレンタルはキャンセル出来ません。']);
       }
 
     }
