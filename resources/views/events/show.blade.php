@@ -97,7 +97,7 @@
 
                   @else
                     {{-- 現在以降の場合 --}}
-                    @if( \Carbon\CarbonImmutable::parse($event->start_date)->format('Y-m-d H:i:s')  >   \Carbon\CarbonImmutable::now()->format('Y-m-d H:i:s')  )
+                    @if( \Carbon\CarbonImmutable::parse($event->start_date)->format('Y-m-d H:i:s')  >   \Carbon\CarbonImmutable::today()->format('Y-m-d H:i:s')  )
 
                       <p class="text-green-600">既にご自分で予約済です。</p>
 

@@ -120,6 +120,15 @@ class EventController extends Controller
 
     public function show(Event $event){
 
+
+    // 何かの不具合で非表示のイベントが飛んで来た場合、早期リターン
+    // ここ厳密等価演算子はＮＧ
+    if($event->is_visible == false){
+      abort(404);
+    }
+
+
+
       // ▼変数色々
       $eventDate = CarbonImmutable::parse($event->start_date)->format('Y年m月d日');
       $startTime = CarbonImmutable::parse($event->start_date)->format('H時i分');
