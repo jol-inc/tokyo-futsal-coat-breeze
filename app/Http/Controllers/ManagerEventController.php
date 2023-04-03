@@ -54,8 +54,10 @@ class ManagerEventController extends Controller
 
     // 存在したら
     if($check){
-      session()->flash('status', 'この時間帯は既に他の予約が存在します。');
-      return view('manager.events.create');
+      // session()->flash('status', 'この時間帯は既に他の予約が存在します。');
+      // return view('manager.events.create');
+// return view('manager.events.create')->with(['status' =>'alert','message' =>'この時間帯は既に他の予約が存在します。']);
+return back()->with(['status' =>'alert','message' =>'この時間帯は既に他の予約が存在します。']);
     }
 
     // 日付と事項を合体
@@ -73,8 +75,9 @@ class ManagerEventController extends Controller
       'is_visible' => $request['is_visible'],
     ]);
 
-    session()->flash('status', '登録okです');
-    return redirect()->route('manager.events.index');
+    // session()->flash('status', '登録okです');
+    // return redirect()->route('manager.events.index');
+return redirect()->route('manager.events.index')->with(['status' =>'info','message' =>'イベント新規登録okです']);
   }
 
   
@@ -109,11 +112,17 @@ class ManagerEventController extends Controller
   {
 
     // 存在確認（Service使用）
-    $check = EventService::checkEventUpdateDuplication($request['event_date'],$request['start_time'],$request['end_time']);
+    $check = EventService::checkEventDuplicationExceptOwn(
 
-    // 既に予約が存在したら（自分は既に１個いるので、１より多い場合）
-    if($check > 1){
-      return back()->with('status', 'この時間帯は既に他の予約が存在します。');
+
+    // 自身のイベントidも渡す
+    $event->id,
+    $request['event_date'],$request['start_time'],$request['end_time']);
+
+
+    // 既に予約が存在したら
+    if ($check) {
+      return back()->with(['status' =>'alert','message' =>'この時間帯は既に他の予約が存在します。']);
     }
 
     // 日付と事項を合体
@@ -142,8 +151,9 @@ class ManagerEventController extends Controller
     $startTime = CarbonImmutable::parse($event->start_date)->format('H時i分');
     $endTime   = CarbonImmutable::parse($event->end_date)->format('H時i分');
 
-    session()->flash('status', '更新okです');
-    return redirect()->route('manager.events.show',compact('event','eventDate','startTime','endTime','eventUsers'));
+    // session()->flash('status', '更新okです');
+    // return redirect()->route('manager.events.show',compact('event','eventDate','startTime','endTime','eventUsers'));
+return redirect()->route('manager.events.show',compact('event','eventDate','startTime','endTime','eventUsers'))->with(['status' =>'info','message' =>'更新okです']);
 
   }
 
