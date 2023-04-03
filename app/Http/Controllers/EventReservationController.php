@@ -49,14 +49,14 @@ class EventReservationController extends Controller
           'number_of_people' => $request->number_of_people,
         ]);
 
-        return redirect()->route('mypage.index')->with(['status' =>'info','message' =>'予約okです']);
+        return redirect()->route('mypage.index')->with(['status' =>'info','message' =>'イベント：　予約okです']);
 
       }else{
-        return back()->with(['status' =>'alert','message' =>'人数的に予約出来ませんでした。他の方が同時に予約した可能性もあります']);        
+        return back()->with(['status' =>'alert','message' =>'イベント：　人数的に予約出来ませんでした。他の方が同時に予約した可能性もあります']);        
       }
-      
+
     }else{
-        return redirect()->route('mypage.index')->with(['status' =>'alert','message' =>'既にご自分で予約済です。']);        
+        return redirect()->route('mypage.index')->with(['status' =>'alert','message' =>'イベント：　既にご自分で予約済です。']);        
 
     }
 
@@ -87,11 +87,9 @@ class EventReservationController extends Controller
         'canceled_date' => CarbonImmutable::now()->format('Y-m-d H:i:s'),
       ]);
 
-      // return redirect()->route('mypage.events')->with('status','キャンセルしました。');
-      return redirect()->route('mypage.index')->with('status','キャンセルしました。');
+      return redirect()->route('mypage.index')->with(['status' =>'info','message' =>'イベントをキャンセルしました。']);
     }else{
-      // return redirect()->route('mypage.events')->with('status','過去のイベントはキャンセル出来ません。');
-      return redirect()->route('mypage.index')->with('status','過去のイベントはキャンセル出来ません。');
+      return redirect()->route('mypage.index')->with(['status' =>'alert','message' =>'過去のイベントはキャンセル出来ません。']);
     }
 
 
