@@ -26,8 +26,8 @@ class UserSeeder extends Seeder
           'created_at' => new DateTime(),
         ],
         [
-          'name' => 'u1',
-          'email' => 'u1@u1.com',
+          'name' => 'c1',
+          'email' => 'c1@c1.com',
           'password' => Hash::make('pppppppp'),
           'role' => 9,
           'created_at' => new DateTime(),
