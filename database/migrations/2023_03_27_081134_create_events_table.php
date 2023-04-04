@@ -18,7 +18,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->tinyInteger('kind');
-            $table->foreignId('user_id');
+            $table->foreignId('user_id')->constrained('users');
             $table->text('information');
             $table->integer('max_people');
             $table->datetime('start_date');
