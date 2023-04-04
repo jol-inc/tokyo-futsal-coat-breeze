@@ -102,7 +102,7 @@
             <form method="GET" action="{{ route('manager.events.edit',['event' => $event->id]) }}">
               <table class="table-auto w-full text-left whitespace-no-wrap">
                   <tr>
-                    <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl"><x-input-label for="event_name" value="イベントID" /></th>
+                    <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl"><x-input-label for="event_id" value="イベントID" /></th>
                     <td class="px-4 py-3">{{ $event->id }}</td>
                   </tr>
                   <tr>
