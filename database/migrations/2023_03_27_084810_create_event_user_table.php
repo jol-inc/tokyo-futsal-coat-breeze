@@ -21,9 +21,8 @@ return new class extends Migration
           $table->foreignId('event_id')->constrained('events');
           $table->integer('number_of_people');
           $table->datetime('canceled_date')->nullable();
-          // $table->timestamps();
-          $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
-          $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'));
+          $table->dateTime('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+          $table->dateTime('updated_at')->default(DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'));
         });
     }
 
