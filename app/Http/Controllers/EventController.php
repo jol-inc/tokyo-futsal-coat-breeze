@@ -107,8 +107,8 @@ class EventController extends Controller
       $join->on('events.id', '=', 'reservedPeople.event_id');
       })
       ->where('is_visible',true)//表示中にした物
-      ->whereNull('canceled_date')//コートレンタルをキャンセルした物は非表示
-// ->whereNull('events.customer_canceled_date')//コートレンタルをキャンセルした物は非表示
+      // ->whereNull('canceled_date')//コートレンタルをキャンセルした物は非表示
+->whereNull('events.customer_canceled_date')//コートレンタルをキャンセルした物は非表示
       ->whereBetween('start_date', [$startDate, $endDate])
       ->orderBy('start_date', 'asc')
       ->get();
