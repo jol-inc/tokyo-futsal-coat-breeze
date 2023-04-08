@@ -58,7 +58,7 @@ class CoatReservationController extends Controller
               'information' =>  "コートレンタル_" . Auth::id() . "_" . Auth::user()->name . "_" .  $startDate,
               'start_date' => $startDate,
               'end_date' => $endDate,
-              'max_people' => 0,
+              'max_people' => 1,
               'is_visible' => 1,
             ]);
 
