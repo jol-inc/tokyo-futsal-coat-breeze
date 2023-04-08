@@ -17,52 +17,53 @@ Route::get('/', function () {
 })->name('/');
 
 
-// カレンダー
+// イベント等カレンダー
 Route::get('events/calendar', [EventController::class, 'calendar'])->name('events.calendar');
 Route::get('events/calendar-change', [EventController::class, 'calendarChange'])->name('events.calendar-change');
 
-// イベント詳細
+// 店舗イベント詳細
 Route::get('events/{event}', [EventController::class, 'show'])->name('events.show');
 
 
-//通常イベント予約
-Route::middleware('can:customer-higher','auth')->group(function(){
+// 店舗イベント予約
+Route::middleware('auth','can:customer-higher')->group(function(){
   Route::post('event-reservation/{event}', [EventReservationController::class, 'reserve'])->name('event-reservation.reserve');
   Route::post('event-reservation/{event}/cancel', [EventReservationController::class, 'cancel'])->name('event-reservation.cancel');
 });
 
 
 // コートレンタル
-Route::get('coat-reservation', [CoatReservationController::class, 'index'])->name('coat-reservation.index');
-Route::post('coat-reservation', [CoatReservationController::class, 'store'])->name('coat-reservation.store');
-Route::post('coat-reservation/{event}/cancel', [CoatReservationController::class, 'cancel'])->name('coat-reservation.cancel');
-
-
-// マイページ
-Route::prefix('mypage')
-->middleware(['auth','can:customer-higher'])
-->group(function(){
-  Route::get('/', [MypageController::class, 'index'])->name('mypage.index');
+Route::middleware('auth','can:customer-higher')->group(function(){
+  Route::get('coat-reservation', [CoatReservationController::class, 'index'])->name('coat-reservation.index');
+  Route::post('coat-reservation', [CoatReservationController::class, 'store'])->name('coat-reservation.store');
+  Route::post('coat-reservation/{event}/cancel', [CoatReservationController::class, 'cancel'])->name('coat-reservation.cancel');
 });
 
 
-// マネージャー以上
+// マイページ
+Route::middleware(['auth','can:customer-higher'])
+->group(function(){
+  Route::get('mypage', [MypageController::class, 'index'])->name('mypage.index');
+});
+
+
+  //マネージャー以上
 Route::prefix('manager')
 ->middleware('auth','can:manager-higher')->group(function(){
 
- //ManagerController
- Route::get('/', [ManagerController::class, 'index'])->name('manager.index');
+  //▼ ManagerController
+  Route::get('/', [ManagerController::class, 'index'])->name('manager.index');
 
- //ここからManagerEventController
- Route::get('events/past', [ManagerEventController::class, 'past'])->name('manager.events.past');
+  //▼ ここから ManagerEventController
+  Route::get('events/past', [ManagerEventController::class, 'past'])->name('manager.events.past');
 
- Route::get('events', [ManagerEventController::class, 'index'])->name('manager.events.index');
- Route::get('events/create', [ManagerEventController::class, 'create'])->name('manager.events.create');
- Route::post('events', [ManagerEventController::class, 'store'])->name('manager.events.store');
- Route::get('events/{event}', [ManagerEventController::class, 'show'])->name('manager.events.show');
- Route::get('events/{event}/edit', [ManagerEventController::class, 'edit'])->name('manager.events.edit');
- Route::put('events{event}', [ManagerEventController::class, 'update'])->name('manager.events.update');
- Route::delete('events{event}', [ManagerEventController::class, 'destroy'])->name('manager.events.destroy');
+  Route::get('events', [ManagerEventController::class, 'index'])->name('manager.events.index');
+  Route::get('events/create', [ManagerEventController::class, 'create'])->name('manager.events.create');
+  Route::post('events', [ManagerEventController::class, 'store'])->name('manager.events.store');
+  Route::get('events/{event}', [ManagerEventController::class, 'show'])->name('manager.events.show');
+  Route::get('events/{event}/edit', [ManagerEventController::class, 'edit'])->name('manager.events.edit');
+  Route::put('events{event}', [ManagerEventController::class, 'update'])->name('manager.events.update');
+  Route::delete('events{event}', [ManagerEventController::class, 'destroy'])->name('manager.events.destroy');
 });
 
 
