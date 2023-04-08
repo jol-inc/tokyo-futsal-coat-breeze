@@ -16,6 +16,7 @@ class MypageController extends Controller
   public function index(){
     // この時点ではユーザーに紐づくキャンセルされてないイベント達
     $events = User::findOrFail(Auth::id())->events()
+->withPivot('number_of_people')
     ->wherePivot('canceled_date',null)
     ->get();
 
@@ -24,6 +25,7 @@ class MypageController extends Controller
     $from_today_events = MypageService::when_events($events,'from_today_events');
     $past_events = MypageService::when_events($events,'past_events');
 
+// dd($from_today_events);
 
     // return view('mypage.index',compact('events','from_today_events','past_events'));
     return view('mypage.index',compact('from_today_events','past_events'));

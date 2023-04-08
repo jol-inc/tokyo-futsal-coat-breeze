@@ -19,21 +19,21 @@ class EventUserSeeder extends Seeder
       DB::table('event_user')->insert([[
         'user_id' => 1,
         'event_id' => 1,
-        'number_of_people' => 2,
+        'number_of_people' => 1,
         'canceled_date' => null,
         'created_at' => new DateTime(),
         ],
         [
         'user_id' => 2,
         'event_id' => 2,
-        'number_of_people' => 2,
+        'number_of_people' => 1,
         'canceled_date' => null,
         'created_at' => new DateTime(),
         ],
         [
         'user_id' => 1,
-        'event_id' => 2,
-        'number_of_people' => 3,
+        'event_id' => 3,
+        'number_of_people' => 1,
         'canceled_date' => null,
         'created_at' => new DateTime(),
         ]

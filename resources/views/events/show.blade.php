@@ -105,7 +105,7 @@
                         </form>
 
                       {{-- @elseif( $event->kind === 1 ) --}}
-@elseif( $event->kind === config(own_const.EVENTS_KINDS.COAT_RENTAL) )
+@elseif( $event->kind === config("own_const.EVENTS_KINDS.COAT_RENTAL") )
 
                         {{-- コートレンタル用 キャンセル--}}
                         <form method="POST" id="coatCancel_{{ $event->id }}" action="{{ route('coat-reservation.cancel',$event->id) }}">

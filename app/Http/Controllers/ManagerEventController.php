@@ -26,6 +26,9 @@ class ManagerEventController extends Controller
     ->whereNull('canceled_date') //通常イベントのキャンセルを除く （event_userテーブル）
     ->groupBy('event_id');
 
+// dd($reservedPeople);
+
+
     // サブクエリを外部結合で
     $events = DB::table('events')
     ->leftJoinSub($reservedPeople, 'reservedPeople',
@@ -35,6 +38,11 @@ class ManagerEventController extends Controller
     ->whereDate('start_date','>=',$today)
     ->orderBy('start_date','asc')
     ->paginate(10);
+
+
+
+// dd($events);
+
 
     return view('manager.events.index',compact('events'));
   }
