@@ -25,7 +25,8 @@ class MypageController extends Controller
     $past_events = MypageService::when_events($events,'past_events');
 
 
-    return view('mypage.index',compact('events','from_today_events','past_events'));
+    // return view('mypage.index',compact('events','from_today_events','past_events'));
+    return view('mypage.index',compact('from_today_events','past_events'));
   }
 
 

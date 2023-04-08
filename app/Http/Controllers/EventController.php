@@ -58,7 +58,6 @@ class EventController extends Controller
       ->orderBy('start_date', 'asc')
       ->get();
 
-
       return view('events.calendar',compact('currentDate','currentWeek','events'));
       
     }
