@@ -52,7 +52,8 @@ class CoatReservationController extends Controller
 
             // eventsテーブルに挿入
             $event =  Event::create([
-              'name' => "コートレンタル_" . Auth::id() . "_" . Auth::user()->name . "_" .  $startDate,
+              // 'name' => "コートレンタル_" . Auth::id() . "_" . Auth::user()->name . "_" .  $startDate,
+              'name' => "コートレンタル_" . Auth::id() . "_" . Auth::user()->name . "_" .  CarbonImmutable::parse("$startDate")->format('Y-m-d H:i'),
               'kind' => 1,
               'user_id' => Auth::id(),
               'information' =>  "コートレンタル_" . Auth::id() . "_" . Auth::user()->name . "_" .  $startDate,
