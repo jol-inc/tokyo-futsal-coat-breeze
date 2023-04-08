@@ -26,23 +26,15 @@ class ManagerEventController extends Controller
     ->whereNull('canceled_date') //通常イベントのキャンセルを除く （event_userテーブル）
     ->groupBy('event_id');
 
-// dd($reservedPeople);
-
 
     // サブクエリを外部結合で
     $events = DB::table('events')
     ->leftJoinSub($reservedPeople, 'reservedPeople',
     function($join){$join->on('events.id', '=', 'reservedPeople.event_id');})
-    // ->whereNull('canceled_date') //コートレンタルのキャンセルを除く （eventsテーブル）
-->whereNull('events.customer_canceled_date') //コートレンタルのキャンセルを除く （eventsテーブル）
+    ->whereNull('events.customer_canceled_date') //コートレンタルのキャンセルを除く （eventsテーブル）
     ->whereDate('start_date','>=',$today)
     ->orderBy('start_date','asc')
     ->paginate(10);
-
-
-
-// dd($events);
-
 
     return view('manager.events.index',compact('events'));
   }
@@ -63,10 +55,7 @@ class ManagerEventController extends Controller
 
     // 存在したら
     if($check){
-      // session()->flash('status', 'この時間帯は既に他の予約が存在します。');
-      // return view('manager.events.create');
-// return view('manager.events.create')->with(['status' =>'alert','message' =>'この時間帯は既に他の予約が存在します。']);
-return back()->with(['status' =>'alert','message' =>'この時間帯は既に他の予約が存在します。']);
+      return back()->with(['status' =>'alert','message' =>'この時間帯は既に他の予約が存在します。']);
     }
 
     // 日付と事項を合体
@@ -75,8 +64,7 @@ return back()->with(['status' =>'alert','message' =>'この時間帯は既に他
     // 挿入
     Event::create([
       'name' => $request['event_name'],
-      // 'kind' => 5,
-'kind' => config("own_const.EVENT_KIND.STORE_EVENT"),
+      'kind' => config("own_const.EVENT_KIND.STORE_EVENT"),
       'user_id' => Auth::id(),
       'information' => $request['information'],
       'start_date' => $startDate,
@@ -85,9 +73,7 @@ return back()->with(['status' =>'alert','message' =>'この時間帯は既に他
       'is_visible' => $request['is_visible'],
     ]);
 
-    // session()->flash('status', '登録okです');
-    // return redirect()->route('manager.events.index');
-return redirect()->route('manager.events.index')->with(['status' =>'info','message' =>'イベント新規登録okです']);
+    return redirect()->route('manager.events.index')->with(['status' =>'info','message' =>'イベント新規登録okです']);
   }
 
   
@@ -141,8 +127,7 @@ return redirect()->route('manager.events.index')->with(['status' =>'info','messa
 
     // 挿入
     $event->name = $request['event_name'];
-    // $event->kind = 5;
-$event->kind = config("own_const.EVENT_KIND.STORE_EVENT");
+    $event->kind = config("own_const.EVENT_KIND.STORE_EVENT");
     $event->user_id = Auth::id();
     $event->information = $request['information'];
     $event->start_date = $startDate;
@@ -162,9 +147,7 @@ $event->kind = config("own_const.EVENT_KIND.STORE_EVENT");
     $startTime = CarbonImmutable::parse($event->start_date)->format('H時i分');
     $endTime   = CarbonImmutable::parse($event->end_date)->format('H時i分');
 
-    // session()->flash('status', '更新okです');
-    // return redirect()->route('manager.events.show',compact('event','eventDate','startTime','endTime','eventUsers'));
-return redirect()->route('manager.events.show',compact('event','eventDate','startTime','endTime','eventUsers'))->with(['status' =>'info','message' =>'更新okです']);
+    return redirect()->route('manager.events.show',compact('event','eventDate','startTime','endTime','eventUsers'))->with(['status' =>'info','message' =>'更新okです']);
 
   }
 

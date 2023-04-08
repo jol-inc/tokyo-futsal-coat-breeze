@@ -22,13 +22,6 @@ class CoatReservationController extends Controller
     }
 
 
-
-    // public function reserve(){
-    //   return view('coat-reservation.reserve');
-    // }
-
-
-
     public function store(CoatRreservationRequest $request){
 
       // 同じ時間帯にイベント存在確認（Service使用）
@@ -52,10 +45,8 @@ class CoatReservationController extends Controller
 
             // eventsテーブルに挿入
             $event =  Event::create([
-              // 'name' => "コートレンタル_" . Auth::id() . "_" . Auth::user()->name . "_" .  $startDate,
               'name' => "コートレンタル_" . Auth::id() . "_" . Auth::user()->name . "_" .  CarbonImmutable::parse("$startDate")->format('Y-m-d H:i'),
-              // 'kind' => 1,
-'kind' => config("own_const.EVENT_KIND.COAT_RENTAL"),
+              'kind' => config("own_const.EVENT_KIND.COAT_RENTAL"),
               'user_id' => Auth::id(),
               'information' =>  "コートレンタル_" . Auth::id() . "_" . Auth::user()->name . "_" .  $startDate,
               'start_date' => $startDate,
@@ -121,8 +112,7 @@ class CoatReservationController extends Controller
             // ->first() 
             // を付けるとなぜかevents テーブルのみ不具合 canceled_date が入らない
             ->update([
-              // 'canceled_date' => CarbonImmutable::now()->format('Y-m-d H:i:s'),
-'customer_canceled_date' => CarbonImmutable::now()->format('Y-m-d H:i:s'),
+              'customer_canceled_date' => CarbonImmutable::now()->format('Y-m-d H:i:s'),
             ]);
 
           }, 2);
@@ -132,11 +122,8 @@ class CoatReservationController extends Controller
           throw $e; 
         }
 
-        // return redirect()->route('mypage.index')->with('status','コートレンタルをキャンセルしました。');
         return redirect()->route('mypage.index')->with(['status' =>'info','message' =>'コートレンタルをキャンセルしました。']);
       }else{
-        // return redirect()->route('mypage.index')->with('status','過去のコートレンタルはキャンセル出来ません。');
-        // return redirect()->route('mypage.index')->with(['status' =>'alert','message' =>'過去のコートレンタルはキャンセル出来ません。']);
         return redirect()->back()->with(['status' =>'alert','message' =>'過去のコートレンタルはキャンセル出来ません。']);
       }
 

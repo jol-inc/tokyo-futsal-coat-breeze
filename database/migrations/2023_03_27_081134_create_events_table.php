@@ -24,8 +24,7 @@ return new class extends Migration
             $table->datetime('start_date');
             $table->datetime('end_date');
             $table->boolean('is_visible');
-            // $table->dateTime('canceled_date')->nullable()->comment('コートレンタル用キャンセル日時。event_userテーブルのcanceled_dateと同時に入れる');
-$table->dateTime('customer_canceled_date')->nullable()->comment('コートレンタル用キャンセル日時。event_userテーブルのcanceled_dateと同時に入れる');
+            $table->dateTime('customer_canceled_date')->nullable()->comment('コートレンタル用キャンセル日時。event_userテーブルのcanceled_dateと同時に入れる');
             $table->dateTime('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->dateTime('updated_at')->default(DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'));
         });
