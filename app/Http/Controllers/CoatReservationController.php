@@ -120,7 +120,8 @@ class CoatReservationController extends Controller
             // ->first() 
             // を付けるとなぜかevents テーブルのみ不具合 canceled_date が入らない
             ->update([
-              'canceled_date' => CarbonImmutable::now()->format('Y-m-d H:i:s'),
+              // 'canceled_date' => CarbonImmutable::now()->format('Y-m-d H:i:s'),
+'customer_canceled_date' => CarbonImmutable::now()->format('Y-m-d H:i:s'),
             ]);
 
           }, 2);

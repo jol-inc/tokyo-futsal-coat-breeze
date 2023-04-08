@@ -30,7 +30,8 @@ class ManagerEventController extends Controller
     $events = DB::table('events')
     ->leftJoinSub($reservedPeople, 'reservedPeople',
     function($join){$join->on('events.id', '=', 'reservedPeople.event_id');})
-    ->whereNull('canceled_date') //コートレンタルのキャンセルを除く （eventsテーブル）
+    // ->whereNull('canceled_date') //コートレンタルのキャンセルを除く （eventsテーブル）
+->whereNull('events.customer_canceled_date') //コートレンタルのキャンセルを除く （eventsテーブル）
     ->whereDate('start_date','>=',$today)
     ->orderBy('start_date','asc')
     ->paginate(10);
@@ -176,7 +177,8 @@ return redirect()->route('manager.events.show',compact('event','eventDate','star
     $events = DB::table('events')
     ->leftJoinSub($reservedPeople, 'reservedPeople',
     function($join){$join->on('events.id', '=', 'reservedPeople.event_id');})
-    ->whereNull('canceled_date')//コートレンタルのキャンセルを除く （eventsテーブル）
+    // ->whereNull('canceled_date')//コートレンタルのキャンセルを除く （eventsテーブル）
+    ->whereNull('events.customer_canceled_date')//コートレンタルのキャンセルを除く （eventsテーブル）
     ->whereDate('start_date','<',$today)
     ->orderBy('start_date','desc')
     ->paginate(10);

@@ -14,7 +14,8 @@ class EventService
     ->whereDate('start_date', $eventDate) // 日にち
     ->whereTime('end_date','>',$startTime)
     ->whereTime('start_date','<', $endTime)
-    ->whereNull('canceled_date')//コートレンタルキャンセル
+    // ->whereNull('canceled_date')//コートレンタルキャンセル
+->whereNull('customer_canceled_date')//コートレンタルキャンセル
     ->exists(); 
   }
 
@@ -26,7 +27,8 @@ class EventService
       ->whereDate('start_date', $eventDate)
       ->whereTime('end_date', '>', $startTime)
       ->whereTime('start_date', '<', $endTime)
-      ->whereNull('canceled_date')//コートレンタルキャンセル
+      // ->whereNull('canceled_date')//コートレンタルキャンセル
+  ->whereNull('customer_canceled_date')//コートレンタルキャンセル
       ->get()
       ->toArray();
     
