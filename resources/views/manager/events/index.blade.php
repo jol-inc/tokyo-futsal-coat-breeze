@@ -57,8 +57,8 @@
                                 <td class="px-4 py-3">{{ $event->id }}</td>
                                 <td class="px-4 py-3">{{\App\Services\MagicWordService::kind($event->kind)}}</td>
                                 <td class="px-4 py-3 text-blue-500 w-48"><a href="{{ route('manager.events.show',['event' => $event->id]) }}">{{ $event->name }}</a></td>
-                                <td class="px-4 py-3">{{ $event->start_date }}</td>
-                                <td class="px-4 py-3">{{ $event->end_date }}</td>
+                                <td class="px-4 py-3">{{ \Carbon\CarbonImmutable::parse("$event->start_date")->format('Y-m-d H:i'); }}</td>
+                                <td class="px-4 py-3">{{ \Carbon\CarbonImmutable::parse("$event->end_date")->format('Y-m-d H:i'); }}</td>
                                 <td class="px-4 py-3">
                                   @if(is_null($event->number_of_people))
                                     0
