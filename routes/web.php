@@ -47,14 +47,10 @@ Route::middleware(['auth','can:customer-higher'])
 });
 
 
-  //マネージャー以上
+  // ▼マネージャー
 Route::prefix('manager')
 ->middleware('auth','can:manager-higher')->group(function(){
 
-  //▼ ManagerController
-  Route::get('/', [ManagerController::class, 'index'])->name('manager.index');
-
-  //▼ ここから ManagerEventController
   Route::get('events/past', [ManagerEventController::class, 'past'])->name('manager.events.past');
 
   Route::get('events', [ManagerEventController::class, 'index'])->name('manager.events.index');
