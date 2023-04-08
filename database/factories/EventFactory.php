@@ -28,7 +28,8 @@ class EventFactory extends Factory
 
       return [
         'name' => $this->faker->word,
-        'kind' => 5,
+        // 'kind' => 5,
+'kind' => config("own_const.EVENT_KIND.STORE_EVENT"),
         'user_id' => 1,
         'information' => $this->faker->realText,
         'max_people' => $this->faker->numberBetween(1,20),

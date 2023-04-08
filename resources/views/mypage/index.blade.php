@@ -56,7 +56,8 @@
                             @foreach ($from_today_events as $event)
                               <tr>
                                 <td class="px-4 py-3">{{ $event->id }}</td>
-                                <td class="px-4 py-3">{{\App\Services\MagicWordService::kind($event->kind)}}</td>
+                                {{-- <td class="px-4 py-3">{{\App\Services\MagicWordService::kind($event->kind)}}</td> --}}
+<td class="px-4 py-3">{{\App\Services\MagicWordService::kind($event->kind)}}</td>
                                 <td class="text-blue-500 px-4 py-3 w-48">
                                   <a href="{{ route('events.show',['event' => $event->id]) }}">{{ $event->name }}</a>
                                 </td>

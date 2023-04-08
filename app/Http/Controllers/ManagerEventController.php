@@ -67,7 +67,8 @@ return back()->with(['status' =>'alert','message' =>'この時間帯は既に他
     // 挿入
     Event::create([
       'name' => $request['event_name'],
-      'kind' => 5,
+      // 'kind' => 5,
+'kind' => config("own_const.EVENT_KIND.STORE_EVENT"),
       'user_id' => Auth::id(),
       'information' => $request['information'],
       'start_date' => $startDate,
@@ -132,7 +133,8 @@ return redirect()->route('manager.events.index')->with(['status' =>'info','messa
 
     // 挿入
     $event->name = $request['event_name'];
-    $event->kind = 5;
+    // $event->kind = 5;
+$event->kind = config("own_const.EVENT_KIND.STORE_EVENT");
     $event->user_id = Auth::id();
     $event->information = $request['information'];
     $event->start_date = $startDate;

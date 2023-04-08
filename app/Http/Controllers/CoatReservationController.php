@@ -54,7 +54,8 @@ class CoatReservationController extends Controller
             $event =  Event::create([
               // 'name' => "コートレンタル_" . Auth::id() . "_" . Auth::user()->name . "_" .  $startDate,
               'name' => "コートレンタル_" . Auth::id() . "_" . Auth::user()->name . "_" .  CarbonImmutable::parse("$startDate")->format('Y-m-d H:i'),
-              'kind' => 1,
+              // 'kind' => 1,
+'kind' => config("own_const.EVENT_KIND.COAT_RENTAL"),
               'user_id' => Auth::id(),
               'information' =>  "コートレンタル_" . Auth::id() . "_" . Auth::user()->name . "_" .  $startDate,
               'start_date' => $startDate,
