@@ -25,7 +25,7 @@ class RouteServiceProvider extends ServiceProvider
     // public const HOME = '/dashboard';
     public const HOME = '/';
     public const CUSTOMER_HOME = 'mypage';
-    public const MANAGER_HOME = 'manager';
+    public const MANAGER_HOME = 'manager/events';
 
 
     /**
