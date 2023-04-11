@@ -52,18 +52,34 @@ Route::middleware(['auth','can:customer-higher'])
 
 
   // ▼マネージャー
-Route::prefix('manager')
-->middleware('auth','can:manager-higher')->group(function(){
+// Route::prefix('manager')
+// ->middleware('auth','can:manager-higher')->group(function(){
 
-  Route::get('events/past', [ManagerEventController::class, 'past'])->name('manager.events.past');
+//   Route::get('events/past', [ManagerEventController::class, 'past'])->name('manager.events.past');
 
-  Route::get('events', [ManagerEventController::class, 'index'])->name('manager.events.index');
-  Route::get('events/create', [ManagerEventController::class, 'create'])->name('manager.events.create');
-  Route::post('events', [ManagerEventController::class, 'store'])->name('manager.events.store');
-  Route::get('events/{event}', [ManagerEventController::class, 'show'])->name('manager.events.show');
-  Route::get('events/{event}/edit', [ManagerEventController::class, 'edit'])->name('manager.events.edit');
-  Route::put('events{event}', [ManagerEventController::class, 'update'])->name('manager.events.update');
-  Route::delete('events{event}', [ManagerEventController::class, 'destroy'])->name('manager.events.destroy');
+//   Route::get('events', [ManagerEventController::class, 'index'])->name('manager.events.index');
+//   Route::get('events/create', [ManagerEventController::class, 'create'])->name('manager.events.create');
+//   Route::post('events', [ManagerEventController::class, 'store'])->name('manager.events.store');
+//   Route::get('events/{event}', [ManagerEventController::class, 'show'])->name('manager.events.show');
+//   Route::get('events/{event}/edit', [ManagerEventController::class, 'edit'])->name('manager.events.edit');
+//   Route::put('events{event}', [ManagerEventController::class, 'update'])->name('manager.events.update');
+//   Route::delete('events{event}', [ManagerEventController::class, 'destroy'])->name('manager.events.destroy');
+// });
+Route::middleware('auth','can:manager-higher')
+->prefix('manager/events')
+->controller(ManagerEventController::class)
+->name('manager.events.')
+->group(function(){
+
+  Route::get('past', 'past')->name('past');
+
+  Route::get('/','index')->name('index');
+  Route::get('create','create')->name('create');
+  Route::post('/','store')->name('store');
+  Route::get('{event}','show')->name('show');
+  Route::get('{event}/edit','edit')->name('edit');
+  Route::put('{event}','update')->name('update');
+  // Route::delete('{event}','destroy')->name('destroy');
 });
 
 
