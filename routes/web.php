@@ -39,6 +39,14 @@ Route::middleware('auth','can:customer-higher')->group(function(){
   Route::post('coat-reservation/{event}/cancel', [CoatReservationController::class, 'cancel'])->name('coat-reservation.cancel');
 });
 
+// Route::middleware('auth','can:customer-higher')
+// ->prefix('coat-reservation')
+// ->group(function(){
+//   Route::get('/', [CoatReservationController::class, 'index'])->name('coat-reservation.index');
+//   Route::post('/', [CoatReservationController::class, 'store'])->name('coat-reservation.store');
+//   Route::post('{event}/cancel', [CoatReservationController::class, 'cancel'])->name('coat-reservation.cancel');
+// });
+
 
 // マイページ
 Route::middleware(['auth','can:customer-higher'])

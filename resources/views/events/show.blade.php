@@ -95,7 +95,7 @@
 
                       <p class="text-green-600">既にご自分で予約済です。</p>
 
-                      @if ( $event->kind === config("own_const.EVENT_KIND.STORE_EVENT") )
+                      @if ( $event->kind == config("own_const.EVENT_KIND.STORE_EVENT") )
 
                         {{-- イベント用 キャンセル --}}
                         <form method="POST" id="eventCancel_{{ $event->id }}" action="{{ route('event-reservation.cancel',$event->id) }}">
@@ -103,7 +103,7 @@
                           <a href="#" data-id="{{ $event->id }}" onclick=" return eventCancel(this)" class="mx-4 py-2 px-6 text-white bg-gray-500 border-0 focus:outline-none hover:bg-gray-600 rounded">キャンセルする</a>
                         </form>
 
-                      @elseif( $event->kind === config("own_const.EVENTS_KINDS.COAT_RENTAL") )
+                      @elseif( $event->kind == config("own_const.EVENT_KIND.COAT_RENTAL") )
 
                         {{-- コートレンタル用 キャンセル--}}
                         <form method="POST" id="coatCancel_{{ $event->id }}" action="{{ route('coat-reservation.cancel',$event->id) }}">
