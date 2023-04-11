@@ -33,19 +33,15 @@ Route::middleware('auth','can:customer-higher')->group(function(){
 
 
 // コートレンタル
-Route::middleware('auth','can:customer-higher')->group(function(){
-  Route::get('coat-reservation', [CoatReservationController::class, 'index'])->name('coat-reservation.index');
-  Route::post('coat-reservation', [CoatReservationController::class, 'store'])->name('coat-reservation.store');
-  Route::post('coat-reservation/{event}/cancel', [CoatReservationController::class, 'cancel'])->name('coat-reservation.cancel');
+Route::middleware('auth','can:customer-higher')
+->prefix('coat-reservation')
+->controller(CoatReservationController::class)
+->name('coat-reservation.')
+->group(function(){
+  Route::get('/', 'index')->name('index');
+  Route::post('/','store')->name('store');
+  Route::post('{event}/cancel','cancel')->name('cancel');
 });
-
-// Route::middleware('auth','can:customer-higher')
-// ->prefix('coat-reservation')
-// ->group(function(){
-//   Route::get('/', [CoatReservationController::class, 'index'])->name('coat-reservation.index');
-//   Route::post('/', [CoatReservationController::class, 'store'])->name('coat-reservation.store');
-//   Route::post('{event}/cancel', [CoatReservationController::class, 'cancel'])->name('coat-reservation.cancel');
-// });
 
 
 // マイページ
@@ -69,6 +65,7 @@ Route::prefix('manager')
   Route::put('events{event}', [ManagerEventController::class, 'update'])->name('manager.events.update');
   Route::delete('events{event}', [ManagerEventController::class, 'destroy'])->name('manager.events.destroy');
 });
+
 
 
 
