@@ -12,32 +12,44 @@ use App\Models\Event;
 class EventController extends Controller
 {
 
+    public $currentDate;
+    public $currentWeek;
+    public $day;
+
+    public $checkDay;
+    public $dayOfWeek;
+    public $sevenDaysLater;
+    public $events;
+
+
     public function calendar(){
 
       //今日の情報を作成
       //ココはcalendarChange()と違う（今日である）
-      $currentDate = CarbonImmutable::today()->format('m月d日');   
 
-      //今週の情報を作成
-      $currentWeek = [];
+      $this->currentDate = CarbonImmutable::today()->format('m月d日');   
+
+            //今週の情報を作成
+            // $currentWeek = [];
+      $this->currentWeek = [];
 
       //ココはcalendarChange()と違う（ココは今日が基準の1週間）
       for($i = 0; $i < 7; $i++):
-        $day = CarbonImmutable::today()->addDays($i)->format('m月d日');
-        $checkDay = CarbonImmutable::today()->addDays($i)->format('Y-m-d');
-        $dayOfWeek = CarbonImmutable::today()->addDays($i)->dayName;
-        array_push( $currentWeek, [
-          'day' => $day,
-          'checkDay' => $checkDay,
-          'dayOfWeek' => $dayOfWeek,
+        $this->day = CarbonImmutable::today()->addDays($i)->format('m月d日');
+        $this->checkDay = CarbonImmutable::today()->addDays($i)->format('Y-m-d');
+        $this->dayOfWeek = CarbonImmutable::today()->addDays($i)->dayName;
+        array_push( $this->currentWeek, [
+          'day' => $this->day,
+          'checkDay' => $this->checkDay,
+          'dayOfWeek' => $this->dayOfWeek,
         ]);
       endfor;
 
-
+ 
       ///////////////////////////////
       //今週のイベント情報を取得（外部結合でnullも含め、イベント毎に何人予約あるかも把握）
 
-      //SQL whereBetweenに入れる変数       
+      //SQL whereBetweenに入れる変数
       //ココはcalendarChange()と違う（今日が基準） 
       $startDate = CarbonImmutable::today()->format('Y-m-d');
       $endDate   = CarbonImmutable::today()->addDays(7)->format('Y-m-d');
@@ -48,7 +60,7 @@ class EventController extends Controller
       ->groupBy('event_id');
 
       //外部結合の理由は、イベントに予約が有っても無くてもイベント自体が作成されているのか知りたい為
-      $events = DB::table('events')
+      $this->events = DB::table('events')
       ->leftJoinSub($reservedPeople, 'reservedPeople', function($join){
       $join->on('events.id', '=', 'reservedPeople.event_id');
       })
@@ -57,6 +69,10 @@ class EventController extends Controller
       ->whereBetween('start_date', [$startDate, $endDate])
       ->orderBy('start_date', 'asc')
       ->get();
+
+      $currentDate = $this->currentDate;
+      $currentWeek = $this->currentWeek;
+      $events      = $this->events;
 
       return view('events.calendar',compact('currentDate','currentWeek','events'));
       
@@ -68,21 +84,23 @@ class EventController extends Controller
 
       //リクエスト日の情報を作成
       //ココは calendar() と違う（リクエスト日） 
-      $currentDate = CarbonImmutable::parse($request->calendar)->format('m月d日');
+      // $currentDate = CarbonImmutable::parse($request->calendar)->format('m月d日');
+      $this->currentDate = CarbonImmutable::parse($request->calendar)->format('m月d日');
   
       
       //リクエスト週の情報を作成
-      $currentWeek = [];
+      // $currentWeek = [];
+      $this->currentWeek = [];
   
       //ココは calendar() と違う（こっちはリクエスト日が基準）
       for($i = 0; $i < 7; $i++){
-        $day = CarbonImmutable::parse($request->calendar)->addDays($i)->format('m月d日');
-        $checkDay = CarbonImmutable::parse($request->calendar)->addDays($i)->format('Y-m-d');
-        $dayOfWeek = CarbonImmutable::parse($request->calendar)->addDays($i)->dayName;
-        array_push( $currentWeek, [
-          'day' => $day,
-          'checkDay' => $checkDay,
-          'dayOfWeek' => $dayOfWeek,
+        $this->day = CarbonImmutable::parse($request->calendar)->addDays($i)->format('m月d日');
+        $this->checkDay = CarbonImmutable::parse($request->calendar)->addDays($i)->format('Y-m-d');
+        $this->dayOfWeek = CarbonImmutable::parse($request->calendar)->addDays($i)->dayName;
+        array_push( $this->currentWeek, [
+          'day' => $this->day,
+          'checkDay' => $this->checkDay,
+          'dayOfWeek' => $this->dayOfWeek,
         ]);
       }
   
@@ -101,7 +119,8 @@ class EventController extends Controller
       ->groupBy('event_id');
   
       //外部結合の理由は、イベントに予約が有っても無くてもイベント自体が作成されているのか知りたい為
-      $events = DB::table('events')
+
+      $this->events = DB::table('events')
       ->leftJoinSub($reservedPeople, 'reservedPeople', function($join){
       $join->on('events.id', '=', 'reservedPeople.event_id');
       })
@@ -111,6 +130,11 @@ class EventController extends Controller
       ->orderBy('start_date', 'asc')
       ->get();
       // ここまで■■■■■
+
+      $currentDate = $this->currentDate;
+      $currentWeek = $this->currentWeek;
+      $events      = $this->events;
+
   
       return view('events.calendar',compact('currentDate','currentWeek','events'));
     }
@@ -120,11 +144,11 @@ class EventController extends Controller
     public function show(Event $event){
 
 
-    // 何かの不具合で非表示のイベントが飛んで来た場合、早期リターン
-    // ここ厳密等価演算子はＮＧ
-    if($event->is_visible == false){
-      abort(404);
-    }
+      // 何かの不具合で非表示のイベントが飛んで来た場合、早期リターン
+      // ここ厳密等価演算子はＮＧ
+      if($event->is_visible == false){
+        abort(404);
+      }
 
 
 
