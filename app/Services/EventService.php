@@ -78,7 +78,28 @@ class EventService
   }
 
 
+  public static function getWeekEvents($startDate, $endDate)
+  {
 
+      //リクエスト週のイベント情報を取得（外部結合でnullも含め、イベント毎に何人予約あるかも把握）
+  
+      //$reservedPeopleは下部$events作成の為の変数
+      $reservedPeople = DB::table('event_user')
+      ->select('event_id', DB::raw('sum(number_of_people) as number_of_people'))
+      ->groupBy('event_id');
+  
+      //外部結合の理由は、イベントに予約が有っても無くてもイベント自体が作成されているのか知りたい為
+      return DB::table('events')
+      ->leftJoinSub($reservedPeople, 'reservedPeople', function($join){
+      $join->on('events.id', '=', 'reservedPeople.event_id');
+      })
+      ->where('is_visible',true)//表示中にした物
+      ->whereNull('events.customer_canceled_date')//コートレンタルをキャンセルした物は非表示
+      ->whereBetween('start_date', [$startDate, $endDate])
+      ->orderBy('start_date', 'asc')
+      ->get();
+
+  }
 
 
 

@@ -7,6 +7,7 @@ use Carbon\CarbonImmutable;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Event;
+use App\Services\EventService;
 
 
 class EventController extends Controller
@@ -19,20 +20,20 @@ class EventController extends Controller
     public $checkDay;
     public $dayOfWeek;
     public $sevenDaysLater;
+
     public $events;
 
 
     public function calendar(){
 
-      //今日の情報を作成
+      //リクエスト日（今日）の変数
       //ココはcalendarChange()と違う（今日である）
+      $this->currentDate = CarbonImmutable::today();
 
-      $this->currentDate = CarbonImmutable::today()->format('m月d日');   
-
-            //今週の情報を作成
-            // $currentWeek = [];
+      //リクエスト週（今週）の変数の配列化
       $this->currentWeek = [];
 
+      // $this->currentWeekに挿入してゆく
       //ココはcalendarChange()と違う（ココは今日が基準の1週間）
       for($i = 0; $i < 7; $i++):
         $this->day = CarbonImmutable::today()->addDays($i)->format('m月d日');
@@ -45,30 +46,12 @@ class EventController extends Controller
         ]);
       endfor;
 
- 
-      ///////////////////////////////
-      //今週のイベント情報を取得（外部結合でnullも含め、イベント毎に何人予約あるかも把握）
 
-      //SQL whereBetweenに入れる変数
-      //ココはcalendarChange()と違う（今日が基準） 
-      $startDate = CarbonImmutable::today()->format('Y-m-d');
-      $endDate   = CarbonImmutable::today()->addDays(7)->format('Y-m-d');
+      $this->events = EventService::getWeekEvents(
+        CarbonImmutable::today()->format('Y-m-d'),
+        CarbonImmutable::today()->addDays(7)->format('Y-m-d'),
+      );
 
-      //$reservedPeopleは下部$events作成の為の変数
-      $reservedPeople = DB::table('event_user')
-      ->select('event_id', DB::raw('sum(number_of_people) as number_of_people'))
-      ->groupBy('event_id');
-
-      //外部結合の理由は、イベントに予約が有っても無くてもイベント自体が作成されているのか知りたい為
-      $this->events = DB::table('events')
-      ->leftJoinSub($reservedPeople, 'reservedPeople', function($join){
-      $join->on('events.id', '=', 'reservedPeople.event_id');
-      })
-      ->where('events.is_visible',true)//表示中のイベント
-      ->whereNull('events.customer_canceled_date')//コートレンタルをキャンセルした物は非表示
-      ->whereBetween('start_date', [$startDate, $endDate])
-      ->orderBy('start_date', 'asc')
-      ->get();
 
       $currentDate = $this->currentDate;
       $currentWeek = $this->currentWeek;
@@ -84,14 +67,12 @@ class EventController extends Controller
 
       //リクエスト日の情報を作成
       //ココは calendar() と違う（リクエスト日） 
-      // $currentDate = CarbonImmutable::parse($request->calendar)->format('m月d日');
-      $this->currentDate = CarbonImmutable::parse($request->calendar)->format('m月d日');
-  
-      
-      //リクエスト週の情報を作成
-      // $currentWeek = [];
+      $this->currentDate = CarbonImmutable::parse($request->calendar);
+
+      //リクエスト週（今週）の変数の配列化
       $this->currentWeek = [];
   
+      // $this->currentWeekに挿入してゆく
       //ココは calendar() と違う（こっちはリクエスト日が基準）
       for($i = 0; $i < 7; $i++){
         $this->day = CarbonImmutable::parse($request->calendar)->addDays($i)->format('m月d日');
@@ -104,32 +85,12 @@ class EventController extends Controller
         ]);
       }
   
-  
-      //■■■■■ここから
-      //リクエスト週のイベント情報を取得（外部結合でnullも含め、イベント毎に何人予約あるかも把握）
-  
-      //SQL whereBetweenに入れる変数       
-      //ココはindex()と違う（リクエスト日が基準なので） 
-      $startDate = CarbonImmutable::parse($request->calendar)->format('Y-m-d');
-      $endDate   = CarbonImmutable::parse($request->calendar)->addDays(7)->format('Y-m-d');
-  
-      //$reservedPeopleは下部$events作成の為の変数
-      $reservedPeople = DB::table('event_user')
-      ->select('event_id', DB::raw('sum(number_of_people) as number_of_people'))
-      ->groupBy('event_id');
-  
-      //外部結合の理由は、イベントに予約が有っても無くてもイベント自体が作成されているのか知りたい為
 
-      $this->events = DB::table('events')
-      ->leftJoinSub($reservedPeople, 'reservedPeople', function($join){
-      $join->on('events.id', '=', 'reservedPeople.event_id');
-      })
-      ->where('is_visible',true)//表示中にした物
-      ->whereNull('events.customer_canceled_date')//コートレンタルをキャンセルした物は非表示
-      ->whereBetween('start_date', [$startDate, $endDate])
-      ->orderBy('start_date', 'asc')
-      ->get();
-      // ここまで■■■■■
+      $this->events = EventService::getWeekEvents(
+        CarbonImmutable::parse($request->calendar)->format('Y-m-d'),
+        CarbonImmutable::parse($request->calendar)->addDays(7)->format('Y-m-d'),
+      );
+
 
       $currentDate = $this->currentDate;
       $currentWeek = $this->currentWeek;
@@ -149,7 +110,6 @@ class EventController extends Controller
       if($event->is_visible == false){
         abort(404);
       }
-
 
 
       // ▼変数色々
