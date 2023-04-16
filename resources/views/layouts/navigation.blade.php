@@ -16,7 +16,7 @@
 
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('events.calendar')" :active="request()->routeIs('events.calendar')">
-                        イベントカレンダー
+                        イベントカレンダーあああ
                     </x-nav-link>
                 </div>
 
@@ -46,7 +46,7 @@
             </div>
 
 
-@auth           
+            @auth  
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ml-6">
                 <x-dropdown align="right" width="48">
@@ -80,31 +80,19 @@
                     </x-slot>
                 </x-dropdown>
             </div>
+            @endauth
 
-@endauth
+            @guest
+            @if (Route::has('login'))
+              <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
+                <a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">ログイン</a>
 
-@guest
-  
-  @if (Route::has('login'))
-  <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
-      @auth
-        @can('customer')
-          <a href="{{ route('mypage.index')}}" class="text-sm text-gray-700 dark:text-gray-500 underline">マイページ</a>
-        @endcan
-        @can('manager')
-          <a href="{{ route('manager.index') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">店舗マネージャーTOP</a>
-        @endcan
-      @else
-          <a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">ログイン</a>
-
-          @if (Route::has('register'))
-              <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">登録</a>
-          @endif
-      @endauth
-  </div>
-  @endif
-
-@endguest
+                @if (Route::has('register'))
+                  <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">登録</a>
+                @endif
+              </div>
+            @endif
+            @endguest
 
 
             <!-- Hamburger -->
@@ -151,7 +139,7 @@
 
 
 
-@auth
+        @auth
 
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200">
@@ -178,7 +166,28 @@
             </div>
         </div>
 
-@endauth
+        @endauth
+
+        @guest
+
+        <!-- Responsive Settings Options -->
+        <div class="pt-4 pb-1 border-t border-gray-200">
+            <div class="mt-3 space-y-1">
+                <!-- Authentication -->
+                <x-responsive-nav-link :href="route('login')">
+                    {{ __('Log In') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('register')">
+                    {{ __('Register') }}
+                </x-responsive-nav-link>
+            </div>
+        </div>
+
+        @endguest
+
+
+
+
 
 
     </div>
