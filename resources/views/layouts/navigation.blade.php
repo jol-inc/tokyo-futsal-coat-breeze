@@ -16,7 +16,7 @@
 
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('events.calendar')" :active="request()->routeIs('events.calendar')">
-                        イベントカレンダーぶぶぶ
+                      イベントカレンダー（Breeze）
                     </x-nav-link>
                 </div>
 

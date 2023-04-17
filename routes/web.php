@@ -17,7 +17,7 @@ Route::get('/', function () {
 })->name('/');
 
 
-// イベント等カレンダー
+// イベントカレンダー
 Route::get('events/calendar', [EventController::class, 'calendar'])->name('events.calendar');
 Route::get('events/calendar-change', [EventController::class, 'calendarChange'])->name('events.calendar-change');
 
