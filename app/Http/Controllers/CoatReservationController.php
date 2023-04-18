@@ -67,7 +67,8 @@ class CoatReservationController extends Controller
 
       } catch( Throwable $e ){
         Log::error($e);
-        throw $e; 
+        return back()->with(['status' =>'alert','message' =>'データベースエラー、登録出来ませんでした。']);
+        // throw $e;
       }
 
       return redirect()->route('mypage.index')->with(['status' =>'info','message' =>'コートレンタル予約okです']);
