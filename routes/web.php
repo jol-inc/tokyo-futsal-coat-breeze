@@ -5,7 +5,7 @@ use App\Http\Controllers\ManagerController;
 use App\Http\Controllers\ManagerEventController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\EventReservationController;
-use App\Http\Controllers\MyPageController;
+use App\Http\Controllers\MypageController;
 use App\Http\Controllers\CoatReservationController;
 use Illuminate\Support\Facades\Route;
 
