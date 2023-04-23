@@ -11,7 +11,7 @@
                         <img src="{{ asset('images/soccerball.png') }}" class="block h-9 w-auto fill-current mr-2">
                         <div>
                           <p class="text-2xl text-green-600">東京フットサルコート</p>
-                          <p class="text-base text-green-600">（Breeze版）</p>
+                          <p class="text-base text-green-600">（Laravel Breeze版）</p>
                         </div>
                     </a>
                 </div>
