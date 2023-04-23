@@ -204,6 +204,7 @@ const setting = {
   time_24hr: true,
   minTime: "08:00",
   maxTime: "23:00",
+  minuteIncrement: 30
 }
 
 flatpickr("#event_date", {
