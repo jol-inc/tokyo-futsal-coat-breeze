@@ -42,8 +42,8 @@
                     {{-- <x-nav-link :href="route('manager.index')" :active="request()->routeIs('manager.index')">
                         店舗管理者
                     </x-nav-link> --}}
-                    <x-nav-link class="text-red-700 hover:text-red-700" :href="route('manager.events.index')" :active="request()->routeIs('manager.events.index')">
-                        店舗管理者
+                    <x-nav-link :href="route('manager.events.index')" :active="request()->routeIs('manager.events.index')">
+                        ★店舗管理者
                     </x-nav-link>
                   </div>
                 @endcan
