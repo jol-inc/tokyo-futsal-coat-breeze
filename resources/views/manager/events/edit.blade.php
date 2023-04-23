@@ -30,11 +30,12 @@
 
 
 
-              <form method="POST" action="{{ route('manager.events.update',['event' => $event->id]) }}">
+              {{-- <form method="POST" action="{{ route('manager.events.update',['event' => $event->id]) }}">
                 @csrf
-                @method('put')
+                @method('put') --}}
               {{-- <form method="GET" action="{{ route('manager.events.edit',['event' => $event->id]) }}"> --}}
-                <table class="table-auto w-full text-left whitespace-no-wrap">
+
+                {{-- <table class="table-auto w-full text-left whitespace-no-wrap">
                     <tr>
                       <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl"><x-input-label for="event_id" value="イベントID" /></th>
                       <td class="px-4 py-3">{{ $event->id }}</td>
@@ -91,7 +92,7 @@
                       <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl"></th>
                       <td class="px-4 py-3">
                         {{-- 本日以降なら表示 --}}
-                        @if( $eventDate >= \Carbon\Carbon::today()->format('Y年m月d日'))
+                        {{-- @if( $eventDate >= \Carbon\Carbon::today()->format('Y年m月d日'))
                           <x-primary-button class="ml-3">
                             編集実行する
                           </x-primary-button>
@@ -99,8 +100,90 @@
                       </td>
                     </tr>
                 </table>
-              </form>
 
+              </form> --}}
+
+
+
+              <form method="POST" action="{{ route('manager.events.update',['event' => $event->id]) }}">
+                @csrf
+                @method('put')
+
+                <div>
+                    <x-input-label for="event_name" value="イベント名" />
+                    <x-text-input id="event_name" class="block mt-1 w-full" type="text" name="event_name" value="{{ $event->name }}" required />
+                </div>
+
+                <div class="mt-4">
+                    <x-input-label for="information" value="イベント詳細" />
+                    <textarea name="information" id="information" rows="3" class="block mt-1 w-full" required>{{ $event->information }}</textarea>
+                </div>
+
+                <div class="md:flex justify-between">
+                  <div class="mt-4">
+                    <x-input-label for="event_date" value="イベント日付" />
+                    <x-text-input id="event_date" class="block mt-1 w-full" type="text" name="event_date" value="{{ $eventDate }}" required />
+                  </div>
+                  <div class="mt-4">
+                    <x-input-label for="start_time" value="開始時間" />
+                    <x-text-input id="start_time" class="block mt-1 w-full" type="text" name="start_time" value="{{ $startTime }}" required />
+                  </div>
+                  <div class="mt-4">
+                    <x-input-label for="end_time" value="終了時間" />
+                    <x-text-input id="end_time" class="block mt-1 w-full" type="text" name="end_time" value="{{ $endTime }}" required />
+                  </div>
+                </div>
+                
+                <div class="md:flex justify-between items-end">
+
+                  <div class="mt-4">
+                    <x-input-label for="max_people" value="定員数" />
+                    <x-text-input id="max_people" class="block mt-1 w-full" type="number" name="max_people" value="{{ $event->max_people }}" required />
+                  </div>
+
+                  {{-- <div class="space-x-4 justify-around">
+                    <x-input-label for="is_visible" value="イベントカレンダー等に表示or非表示" />
+                    {{-- <input type="radio" name="is_visible" value="1" checked>表示
+                    <input type="radio" name="is_visible" value="0">非表示 --}}
+
+
+
+
+                  <div class="space-x-4">
+
+                    <x-input-label for="is_visible" value="イベントカレンダー等に表示or非表示" />
+
+                    <div class="text-center ml-0">
+                      @if($event->is_visible)
+                        表示中
+                      @else
+                        非表示中
+                      @endif
+                    </div>
+
+                    <div class="text-center">
+                        <input type="radio" name="is_visible" value="1" checked>表示
+                        <input type="radio" name="is_visible" value="0">非表示
+                    </div>
+
+                  </div>
+
+
+
+                  <div>
+                    {{-- 本日以降なら表示 --}}
+                    @if( $eventDate >= \Carbon\Carbon::today()->format('Y年m月d日'))
+                      <x-primary-button class="ml-3">
+                        編集実行する
+                      </x-primary-button>
+                    @endif
+                  </div>
+
+
+                </div>
+
+
+              </form>
 
 
             </div>

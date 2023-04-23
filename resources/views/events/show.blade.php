@@ -38,12 +38,12 @@
                     <x-input-label for="event_name" value="イベントＩＤ" />
                     {{ $event->id }}
                 </div>
-                <div>
+                <div class="mt-2">
                     <x-input-label for="event_name" value="イベント名" />
                     {{ $event->name }}
                 </div>
 
-                <div>
+                <div class="mt-2">
                     <x-input-label for="information" value="イベント詳細" />
                     {!! nl2br(e($event->information)) !!}
                 </div>
