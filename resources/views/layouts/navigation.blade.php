@@ -9,8 +9,10 @@
                         {{-- <x-application-logo class="block h-9 w-auto fill-current text-gray-800" /> --}}
                         {{-- <img src="/images/soccerball.png" class="block h-9 w-auto fill-current mr-2"> --}}
                         <img src="{{ asset('images/soccerball.png') }}" class="block h-9 w-auto fill-current mr-2">
-
-                        <p class="text-2xl text-green-600">東京フットサルコート</p>
+                        <div>
+                          <p class="text-2xl text-green-600">東京フットサルコート</p>
+                          <p class="text-base text-green-600">（Breeze版）</p>
+                        </div>
                     </a>
                 </div>
 
@@ -18,7 +20,7 @@
 
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('events.calendar')" :active="request()->routeIs('events.calendar')">
-                      イベントカレンダー（Breeze）
+                      イベントカレンダー
                     </x-nav-link>
                 </div>
 
@@ -40,7 +42,7 @@
                     {{-- <x-nav-link :href="route('manager.index')" :active="request()->routeIs('manager.index')">
                         店舗管理者
                     </x-nav-link> --}}
-                    <x-nav-link :href="route('manager.events.index')" :active="request()->routeIs('manager.events.index')">
+                    <x-nav-link class="text-red-700 hover:text-red-700" :href="route('manager.events.index')" :active="request()->routeIs('manager.events.index')">
                         店舗管理者
                     </x-nav-link>
                   </div>
