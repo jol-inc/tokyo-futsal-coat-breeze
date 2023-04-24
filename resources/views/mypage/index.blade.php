@@ -61,7 +61,7 @@
 {{-- {{ $events->links() }} --}}
                       </div>
 
-                      <h3 class="py-4 font-medium text-gray-900 text-lg">過去</h3> 
+                      <h3 class="mt-20 py-4 font-medium text-gray-900 text-lg">過去</h3> 
                       <div class="w-full mx-auto overflow-auto">
                         <table class="table-auto w-full text-left">
                           <thead>
