@@ -66,5 +66,6 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 
 
-変更テスト2回目3回目4回目
-アカウント変更　inc
+
+### ダウンロード方法
+git clone https://github.com/jol-inc/tokyo-futsal-coat-breeze
