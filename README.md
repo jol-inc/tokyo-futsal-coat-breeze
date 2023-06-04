@@ -3,7 +3,7 @@ git clone https://github.com/jol-inc/tokyo-futsal-coat-breeze
   
   
 ### インストール方法
-cd jol-inc  
+cd tokyo-futsal-coat-breeze  
 composer install  
 npm install  
 npm run dev  
@@ -18,11 +18,12 @@ DB_DATABASE=xxxxxxxx
 DB_USERNAME=xxxxxxxx  
 DB_PASSWORD=xxxxxxxx  
 
+▼DB
+・phpmyadminでデータベース作成
+・user password 設定
 
-▼データベーステーブルとダミーデータの追加  
-XAMPP/MAMPまたは他の開発環境でDBを起動した後に、  
-php artisan migrate:fresh --seed  
-
+▼テーブルとダミーデータの追加  
+・php artisan migrate:fresh --seed  
 
 ▼php artisan key:generate でキーを生成。   
 
