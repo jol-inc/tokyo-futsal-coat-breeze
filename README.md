@@ -11,16 +11,19 @@ npm run dev
 ▼.env  
 .env.example をコピーして .envファイルを作成  
 .envファイルの中の下記をご利用の環境に合わせて変更してください。  
-DB_CONNECTION=mysql  
-DB_HOST=127.0.0.1   
-DB_PORT=3306   
-DB_DATABASE=xxxxxxxx  
-DB_USERNAME=xxxxxxxx  
-DB_PASSWORD=xxxxxxxx  
+DB_CONNECTION=
+DB_HOST=
+DB_PORT=
+DB_DATABASE= 
+DB_USERNAME=
+DB_PASSWORD=
+
+APP_ENV=
+APP_DEBUG=
+APP_URL=
 
 ▼DB
-・phpmyadminでデータベース作成
-・user password 設定
+・phpmyadminでデータベース作成（DB名 user password 設定）
 
 ▼テーブルとダミーデータの追加  
 ・php artisan migrate:fresh --seed  
