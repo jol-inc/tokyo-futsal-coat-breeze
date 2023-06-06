@@ -20,13 +20,13 @@ APP_URL=
 DB_CONNECTION=  
 DB_HOST=  
 DB_PORT=  
-DB_DATABASE= 
+DB_DATABASE=  
 DB_USERNAME=  
 DB_PASSWORD=  
 
 
 ▼DB  
-・phpmyadminでデータベース作成（db名 user password 設定）
+・phpmyadminでデータベース作成（db名、 user、 password 設定）
 
 ▼テーブルとダミーデータの追加  
 ・php artisan migrate:fresh --seed  
