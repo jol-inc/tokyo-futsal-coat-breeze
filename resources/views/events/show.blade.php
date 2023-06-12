@@ -1,7 +1,12 @@
 <x-app-layout>
   <x-slot name="header">
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        @auth
           マイページ（イベント詳細）
+        @endauth
+        @guest
+          （イベント詳細）
+        @endguest
       </h2>
   </x-slot>
 

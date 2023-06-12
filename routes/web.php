@@ -33,7 +33,11 @@ Route::middleware('auth','can:customer-higher')->group(function(){
 
 
 // コートレンタル
-Route::middleware('auth','can:customer-higher')
+
+//メール認証用
+Route::middleware('auth','verified','can:customer-higher')
+
+// Route::middleware('auth','can:customer-higher')
 ->prefix('coat-reservation')
 ->controller(CoatReservationController::class)
 ->name('coat-reservation.')
@@ -45,7 +49,11 @@ Route::middleware('auth','can:customer-higher')
 
 
 // マイページ
-Route::middleware(['auth','can:customer-higher'])
+
+//メール認証用
+Route::middleware(['auth','verified','can:customer-higher'])
+
+// Route::middleware(['auth','can:customer-higher'])
 ->group(function(){
   Route::get('mypage', [MypageController::class, 'index'])->name('mypage.index');
 });
@@ -86,7 +94,11 @@ Route::middleware('auth','can:manager-higher')
 
 
 // プロフィール
-Route::middleware('auth')->group(function () {
+
+//メール認証用
+Route::middleware('auth','verified')->group(function () {
+
+// Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
