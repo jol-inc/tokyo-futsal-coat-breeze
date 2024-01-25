@@ -15,6 +15,13 @@ cd tokyo-futsal-coat-breeze
 composer install  
 npm install  
 npm run dev  
+
+MIXとBreeze が混在して
+アイコンが特大になってしまう時  
+resources/views/layouts/gust.blade.php
+@vite(['resources/css/app.css', 'resources/js/app.js'])
+の部分を消してコメントアウトの部分に変える。
+
 <br><br><br>
 
 
